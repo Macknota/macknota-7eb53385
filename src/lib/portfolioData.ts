@@ -52,11 +52,24 @@ export interface PortfolioData {
     description: string;
     features: string[];
     link: string;
+    images: string[];
+    challenge?: string;
+    solution?: string;
+    result?: string;
   }[];
   languages: {
     name: string;
     level: string;
   }[];
+  stats: {
+    label: string;
+    value: string;
+    icon: string;
+  }[];
+  learning: {
+    title: string;
+    description: string;
+  };
 }
 
 export const defaultPortfolioData: PortfolioData = {
@@ -129,6 +142,10 @@ export const defaultPortfolioData: PortfolioData = {
         "Integration with Stripe for payments and containerization support using Docker.",
       ],
       link: "#",
+      images: [],
+      challenge: "Building a scalable e-commerce backend that handles high traffic and complex business logic.",
+      solution: "Implemented Clean Architecture with CQRS pattern and Redis caching for optimal performance.",
+      result: "Successfully delivered a production-ready API with 99.9% uptime and sub-100ms response times.",
     },
   ],
   languages: [
@@ -136,6 +153,16 @@ export const defaultPortfolioData: PortfolioData = {
     { name: "English", level: "Intermediate (Professional working proficiency)" },
     { name: "Spanish", level: "Beginner" },
   ],
+  stats: [
+    { label: "Projects Built", value: "15+", icon: "code" },
+    { label: "Years Experience", value: "2+", icon: "briefcase" },
+    { label: "Graduation Year", value: "2023", icon: "graduation" },
+    { label: "Backend Expert", value: ".NET", icon: "rocket" },
+  ],
+  learning: {
+    title: "Continuous Learning & Growth",
+    description: "I believe in staying current with the latest technologies and best practices. From completing my Back-End development diploma to working on diverse projects, I'm committed to delivering cutting-edge backend solutions that scale with business needs.",
+  },
 };
 
 // Local Storage Key

@@ -2,6 +2,7 @@ import { PortfolioData } from "@/lib/portfolioData";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, Phone, MapPin, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import CodeBackground from "./CodeBackground";
 
 interface HeroSectionProps {
   data: PortfolioData;
@@ -17,6 +18,9 @@ const HeroSection = ({ data }: HeroSectionProps) => {
   
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated Code Background */}
+      <CodeBackground />
+      
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
       
@@ -31,11 +35,14 @@ const HeroSection = ({ data }: HeroSectionProps) => {
           {data.hero.profileImage && (
             <div className="mb-8 group">
               <div className="relative inline-block">
+                {/* Animated ring */}
+                <div className="absolute inset-[-8px] bg-gradient-to-r from-primary via-accent to-primary rounded-full animate-spin" style={{ animationDuration: "8s" }} />
+                <div className="absolute inset-[-4px] bg-background rounded-full" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-md opacity-50 group-hover:opacity-80 transition-opacity duration-300" />
                 <img
                   src={data.hero.profileImage}
                   alt={data.hero.name}
-                  className="relative w-36 h-36 rounded-full mx-auto border-4 border-background shadow-2xl object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="relative w-40 h-40 rounded-full mx-auto border-4 border-background shadow-2xl object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </div>

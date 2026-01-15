@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { PortfolioData } from "@/lib/portfolioData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Plus, Trash2, X, ChevronDown, ChevronUp, Image, Upload } from "lucide-react";
 
 interface ProjectsEditorProps {
   data: PortfolioData;
@@ -29,7 +29,7 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
       ...data,
       projects: [
         ...data.projects,
-        { name: "New Project", technologies: [], description: "", features: [], link: "" },
+        { name: "New Project", technologies: [], description: "", features: [], link: "", images: [], challenge: "", solution: "", result: "" },
       ],
     });
     setExpandedProject(data.projects.length);
@@ -68,6 +68,27 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
     const features = [...data.projects[projectIndex].features];
     features.splice(featureIndex, 1);
     updateProject(projectIndex, "features", features);
+  };
+
+  const handleImageUpload = (projectIndex: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        const currentImages = data.projects[projectIndex].images || [];
+        updateProject(projectIndex, "images", [...currentImages, base64]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeImage = (projectIndex: number, imageIndex: number) => {
+    const images = [...(data.projects[projectIndex].images || [])];
+    images.splice(imageIndex, 1);
+    updateProject(projectIndex, "images", images);
   };
 
   return (
@@ -140,6 +161,70 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
                   placeholder="Describe the project..."
                   rows={3}
                 />
+              </div>
+
+              {/* Project Images */}
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <Image className="w-4 h-4" />
+                  Project Images
+                </Label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {(project.images || []).map((img, imgIndex) => (
+                    <div key={imgIndex} className="relative group aspect-video rounded-lg overflow-hidden border border-border">
+                      <img src={img} alt={`Project ${imgIndex + 1}`} className="w-full h-full object-cover" />
+                      <button
+                        onClick={() => removeImage(index, imgIndex)}
+                        className="absolute top-1 right-1 p-1 bg-destructive/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="w-3 h-3 text-destructive-foreground" />
+                      </button>
+                    </div>
+                  ))}
+                  <label className="aspect-video rounded-lg border-2 border-dashed border-border hover:border-primary/50 flex flex-col items-center justify-center cursor-pointer transition-colors bg-muted/20 hover:bg-muted/40">
+                    <Upload className="w-6 h-6 text-muted-foreground mb-1" />
+                    <span className="text-xs text-muted-foreground">Add Image</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => handleImageUpload(index, e)}
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Challenge/Solution/Result */}
+              <div className="space-y-4 pt-4 border-t border-border/50">
+                <h4 className="font-semibold text-foreground">Project Story (Optional)</h4>
+                <div className="space-y-2">
+                  <Label>Challenge</Label>
+                  <Textarea
+                    value={project.challenge || ""}
+                    onChange={(e) => updateProject(index, "challenge", e.target.value)}
+                    placeholder="What problem did this project solve?"
+                    rows={2}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Solution</Label>
+                  <Textarea
+                    value={project.solution || ""}
+                    onChange={(e) => updateProject(index, "solution", e.target.value)}
+                    placeholder="How did you solve it?"
+                    rows={2}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Result</Label>
+                  <Textarea
+                    value={project.result || ""}
+                    onChange={(e) => updateProject(index, "result", e.target.value)}
+                    placeholder="What was the outcome?"
+                    rows={2}
+                  />
+                </div>
               </div>
 
               {/* Technologies */}
