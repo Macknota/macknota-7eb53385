@@ -27,10 +27,10 @@ const AboutSection = ({ data }: AboutSectionProps) => {
           {/* Info Cards */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* Education */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
+                  <div className="p-3 rounded-lg bg-primary/10 pop-icon">
                     <GraduationCap className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -46,10 +46,10 @@ const AboutSection = ({ data }: AboutSectionProps) => {
             </Card>
             
             {/* Military Status */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
+                  <div className="p-3 rounded-lg bg-primary/10 pop-icon">
                     <Shield className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -61,10 +61,10 @@ const AboutSection = ({ data }: AboutSectionProps) => {
             </Card>
             
             {/* Courses */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
+                  <div className="p-3 rounded-lg bg-primary/10 pop-icon">
                     <BookOpen className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -81,10 +81,10 @@ const AboutSection = ({ data }: AboutSectionProps) => {
             </Card>
             
             {/* Languages */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
+                  <div className="p-3 rounded-lg bg-primary/10 pop-icon">
                     <Languages className="w-6 h-6 text-primary" />
                   </div>
                   <div>

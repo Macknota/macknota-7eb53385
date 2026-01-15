@@ -60,13 +60,13 @@ const Navbar = () => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105"
               >
                 {link.label}
               </button>
             ))}
             <Link to="/dashboard">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 pop-element">
                 <Settings className="w-4 h-4" />
                 Dashboard
               </Button>
