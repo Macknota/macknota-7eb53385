@@ -29,7 +29,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
             {data.projects.map((project, index) => (
               <Card 
                 key={index}
-                className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all duration-300"
+                className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all duration-300 interactive-card"
               >
                 <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -37,7 +37,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                       {project.name}
                     </CardTitle>
                     {project.link && project.link !== "#" && (
-                      <Button variant="outline" size="sm" asChild className="w-fit">
+                      <Button variant="outline" size="sm" asChild className="w-fit pop-element">
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-4 h-4 mr-2" />
                           View Project
@@ -51,7 +51,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                       <Badge 
                         key={techIndex} 
                         variant="secondary"
-                        className="bg-primary/10 text-primary border-primary/20"
+                        className="bg-primary/10 text-primary border-primary/20 pop-badge"
                       >
                         {tech}
                       </Badge>
@@ -68,9 +68,9 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     <h4 className="font-semibold text-foreground">Key Features:</h4>
                     <ul className="space-y-2">
                       {project.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start gap-3 text-sm text-muted-foreground">
-                          <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                          <span>{feature}</span>
+                        <li key={featureIndex} className="flex items-start gap-3 text-sm text-muted-foreground group/feature">
+                          <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0 transition-transform duration-200 group-hover/feature:scale-125" />
+                          <span className="group-hover/feature:text-foreground transition-colors duration-200">{feature}</span>
                         </li>
                       ))}
                     </ul>

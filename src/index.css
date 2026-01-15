@@ -149,6 +149,65 @@ All colors MUST be HSL.
   }
 }
 
+/* Interactive Elements - Pop/Scale Effects */
+@layer components {
+  .interactive-card {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .interactive-card:hover {
+    @apply scale-[1.02] shadow-lg;
+  }
+  
+  .interactive-card:active {
+    @apply scale-[0.98];
+  }
+  
+  .pop-element {
+    @apply transition-transform duration-200 ease-out;
+  }
+  
+  .pop-element:hover {
+    @apply scale-105;
+  }
+  
+  .pop-element:active {
+    @apply scale-95;
+  }
+  
+  .pop-badge {
+    @apply transition-all duration-200 ease-out cursor-default;
+  }
+  
+  .pop-badge:hover {
+    @apply scale-110 shadow-md;
+  }
+  
+  .pop-icon {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  .pop-icon:hover {
+    @apply scale-125 rotate-6;
+  }
+  
+  .glow-effect {
+    @apply transition-shadow duration-300;
+  }
+  
+  .glow-effect:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  
+  .slide-up {
+    @apply transition-all duration-300;
+  }
+  
+  .slide-up:hover {
+    @apply -translate-y-1;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

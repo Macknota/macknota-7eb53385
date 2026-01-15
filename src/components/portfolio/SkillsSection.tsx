@@ -41,11 +41,11 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
               return (
                 <Card 
                   key={category.key}
-                  className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
+                  className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group interactive-card slide-up"
                 >
                   <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-3 text-lg">
-                      <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                      <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
                         <Icon className="w-5 h-5 text-primary" />
                       </div>
                       {category.title}
@@ -57,7 +57,7 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
                         <Badge 
                           key={index} 
                           variant="secondary"
-                          className="hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
+                          className="hover:bg-primary hover:text-primary-foreground transition-all duration-200 cursor-default pop-badge"
                         >
                           {skill}
                         </Badge>

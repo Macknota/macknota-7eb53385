@@ -8,7 +8,8 @@ import {
   MessageSquare, 
   GraduationCap,
   Home,
-  RotateCcw
+  RotateCcw,
+  Palette
 } from "lucide-react";
 
 const menuItems = [
@@ -18,6 +19,7 @@ const menuItems = [
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "experience", label: "Experience", icon: Briefcase },
   { id: "contact", label: "Contact Info", icon: MessageSquare },
+  { id: "theme", label: "Theme & Colors", icon: Palette },
 ];
 
 interface DashboardSidebarProps {

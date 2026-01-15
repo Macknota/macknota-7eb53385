@@ -28,10 +28,10 @@ const ContactSection = ({ data }: ContactSectionProps) => {
           {/* Contact Cards */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             {/* Email */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group interactive-card">
               <CardContent className="p-6">
                 <a href={`mailto:${data.contact.email}`} className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -43,10 +43,10 @@ const ContactSection = ({ data }: ContactSectionProps) => {
             </Card>
             
             {/* Phone */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group interactive-card">
               <CardContent className="p-6">
                 <a href={`tel:${data.contact.phone}`} className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -58,10 +58,10 @@ const ContactSection = ({ data }: ContactSectionProps) => {
             </Card>
             
             {/* Location */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group interactive-card">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -73,10 +73,10 @@ const ContactSection = ({ data }: ContactSectionProps) => {
             </Card>
             
             {/* WhatsApp */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group interactive-card">
               <CardContent className="p-6">
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
                     <MessageCircle className="w-6 h-6 text-primary" />
                   </div>
                   <div>
@@ -90,19 +90,19 @@ const ContactSection = ({ data }: ContactSectionProps) => {
           
           {/* Social Links */}
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button variant="outline" size="lg" asChild className="gap-2">
+            <Button variant="outline" size="lg" asChild className="gap-2 pop-element">
               <a href={data.contact.github} target="_blank" rel="noopener noreferrer">
                 <Github className="w-5 h-5" />
                 GitHub
               </a>
             </Button>
-            <Button variant="outline" size="lg" asChild className="gap-2">
+            <Button variant="outline" size="lg" asChild className="gap-2 pop-element">
               <a href={data.contact.linkedin} target="_blank" rel="noopener noreferrer">
                 <Linkedin className="w-5 h-5" />
                 LinkedIn
               </a>
             </Button>
-            <Button size="lg" asChild className="gap-2">
+            <Button size="lg" asChild className="gap-2 pop-element glow-effect">
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5" />
                 WhatsApp
