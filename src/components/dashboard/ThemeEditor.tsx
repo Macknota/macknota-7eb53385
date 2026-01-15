@@ -221,11 +221,12 @@ const ThemeEditor = () => {
           id={id}
           type="color"
           value={hslToHex(value)}
+          onInput={(e) => onChange(hexToHsl((e.target as HTMLInputElement).value))}
           onChange={(e) => onChange(hexToHsl(e.target.value))}
-          className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
+          className="w-20 h-12 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
         />
         <div
-          className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
+          className="flex-1 h-12 rounded-lg border border-border/50"
           style={{ background: `hsl(${value})` }}
         />
       </div>
