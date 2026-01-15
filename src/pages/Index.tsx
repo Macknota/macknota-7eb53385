@@ -7,6 +7,8 @@ import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import ExperienceSection from "@/components/portfolio/ExperienceSection";
 import ContactSection from "@/components/portfolio/ContactSection";
 import Footer from "@/components/portfolio/Footer";
+import StatsSection from "@/components/portfolio/StatsSection";
+import LearningSection from "@/components/portfolio/LearningSection";
 
 const Index = () => {
   const { data, isLoaded } = usePortfolio();
@@ -26,10 +28,12 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection data={data} />
+      <StatsSection data={data} />
       <AboutSection data={data} />
       <SkillsSection data={data} />
       <ProjectsSection data={data} />
       <ExperienceSection data={data} />
+      <LearningSection data={data} />
       <ContactSection data={data} />
       <Footer data={data} />
     </div>
