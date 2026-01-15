@@ -61,11 +61,13 @@ const HeroSection = ({ data }: HeroSectionProps) => {
             </div>
           )}
           
-          {/* Code Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 font-mono text-sm pop-element">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            Available for opportunities
-          </div>
+          {/* Status Badge */}
+          {data.hero.showStatusBadge && (
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 font-mono text-sm pop-element">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              {data.hero.statusBadge || "Available for opportunities"}
+            </div>
+          )}
           
           {/* Name */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 tracking-tight">

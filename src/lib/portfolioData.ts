@@ -6,6 +6,8 @@ export interface PortfolioData {
     subtitle: string;
     profileImage: string;
     cvFile: string;
+    statusBadge: string;
+    showStatusBadge: boolean;
   };
   about: {
     title: string;
@@ -80,6 +82,8 @@ export const defaultPortfolioData: PortfolioData = {
     subtitle: "Building scalable, high-performance backend solutions with clean architecture",
     profileImage: "",
     cvFile: "",
+    statusBadge: "Available for opportunities",
+    showStatusBadge: true,
   },
   about: {
     title: "About Me",

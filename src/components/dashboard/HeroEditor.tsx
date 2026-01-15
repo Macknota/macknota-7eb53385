@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Upload, User, X, FileText, Download } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Upload, User, X, FileText, Download, Sparkles } from "lucide-react";
 
 interface HeroEditorProps {
   data: PortfolioData;
@@ -186,6 +187,54 @@ const HeroEditor = ({ data, onUpdate }: HeroEditorProps) => {
                   </a>
                 </Button>
               )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Status Badge */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-primary" />
+            Status Badge
+          </CardTitle>
+          <CardDescription>The badge shown at the top of your hero section</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <Label htmlFor="showBadge">Show Status Badge</Label>
+              <p className="text-xs text-muted-foreground">Display the availability badge on hero</p>
+            </div>
+            <Switch
+              id="showBadge"
+              checked={data.hero.showStatusBadge}
+              onCheckedChange={(checked) => 
+                onUpdate({
+                  ...data,
+                  hero: { ...data.hero, showStatusBadge: checked },
+                })
+              }
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="statusBadge">Badge Text</Label>
+            <Input
+              id="statusBadge"
+              value={data.hero.statusBadge}
+              onChange={(e) => updateHero("statusBadge", e.target.value)}
+              placeholder="Available for opportunities"
+            />
+          </div>
+          
+          {/* Preview */}
+          <div className="p-4 rounded-lg bg-muted/50 border border-border/50">
+            <p className="text-xs text-muted-foreground mb-2">Preview:</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-mono text-sm">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              {data.hero.statusBadge || "Available for opportunities"}
             </div>
           </div>
         </CardContent>
