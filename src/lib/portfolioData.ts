@@ -5,6 +5,7 @@ export interface PortfolioData {
     title: string;
     subtitle: string;
     profileImage: string;
+    cvFile: string;
   };
   about: {
     title: string;
@@ -78,6 +79,7 @@ export const defaultPortfolioData: PortfolioData = {
     title: ".NET Backend Developer",
     subtitle: "Building scalable, high-performance backend solutions with clean architecture",
     profileImage: "",
+    cvFile: "",
   },
   about: {
     title: "About Me",
