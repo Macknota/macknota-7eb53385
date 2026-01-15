@@ -26,7 +26,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <Navbar data={data} />
       <HeroSection data={data} />
       <StatsSection data={data} />
       <AboutSection data={data} />

@@ -15,7 +15,7 @@ const Footer = ({ data }: FooterProps) => {
           {/* Copyright */}
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <span>© {currentYear} {data.hero.name}.</span>
-            <span className="hidden sm:inline">Built with</span>
+            <span className="hidden sm:inline">{data.hero.footerText || "Built with"}</span>
             <Heart className="w-4 h-4 text-destructive fill-current hidden sm:inline" />
           </div>
 

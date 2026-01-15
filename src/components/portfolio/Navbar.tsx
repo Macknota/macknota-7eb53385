@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Settings, Menu, X, Sun, Moon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
+import { PortfolioData } from "@/lib/portfolioData";
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -12,12 +13,18 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  data?: PortfolioData;
+}
+
+const Navbar = ({ data }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isDashboard = location.pathname === "/dashboard";
   const { isDarkMode, toggleDarkMode } = useTheme();
+
+  const logoText = data?.hero?.logoText || "Adel";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +59,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="text-lg font-bold text-foreground">
             <span className="text-primary">&lt;</span>
-            Adel
+            {logoText}
             <span className="text-primary">/&gt;</span>
           </Link>
 

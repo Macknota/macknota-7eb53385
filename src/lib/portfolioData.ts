@@ -8,6 +8,9 @@ export interface PortfolioData {
     cvFile: string;
     statusBadge: string;
     showStatusBadge: boolean;
+    showCvButton: boolean;
+    logoText: string;
+    footerText: string;
   };
   about: {
     title: string;
@@ -84,6 +87,9 @@ export const defaultPortfolioData: PortfolioData = {
     cvFile: "",
     statusBadge: "Available for opportunities",
     showStatusBadge: true,
+    showCvButton: true,
+    logoText: "Adel",
+    footerText: "Built with",
   },
   about: {
     title: "About Me",

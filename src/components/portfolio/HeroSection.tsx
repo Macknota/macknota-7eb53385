@@ -106,7 +106,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
                 WhatsApp
               </a>
             </Button>
-            {data.hero.cvFile && (
+            {data.hero.showCvButton && data.hero.cvFile && (
               <Button 
                 size="lg" 
                 variant="secondary" 
