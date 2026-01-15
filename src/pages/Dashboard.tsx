@@ -8,6 +8,8 @@ import ProjectsEditor from "@/components/dashboard/ProjectsEditor";
 import ExperienceEditor from "@/components/dashboard/ExperienceEditor";
 import ContactEditor from "@/components/dashboard/ContactEditor";
 import ThemeEditor from "@/components/dashboard/ThemeEditor";
+import StatsEditor from "@/components/dashboard/StatsEditor";
+import LearningEditor from "@/components/dashboard/LearningEditor";
 import { useToast } from "@/hooks/use-toast";
 import {
   AlertDialog,
@@ -56,12 +58,16 @@ const Dashboard = () => {
         return <HeroEditor data={data} onUpdate={updateData} />;
       case "about":
         return <AboutEditor data={data} onUpdate={updateData} />;
+      case "stats":
+        return <StatsEditor data={data} onUpdate={updateData} />;
       case "skills":
         return <SkillsEditor data={data} onUpdate={updateData} />;
       case "projects":
         return <ProjectsEditor data={data} onUpdate={updateData} />;
       case "experience":
         return <ExperienceEditor data={data} onUpdate={updateData} />;
+      case "learning":
+        return <LearningEditor data={data} onUpdate={updateData} />;
       case "contact":
         return <ContactEditor data={data} onUpdate={updateData} />;
       case "theme":
