@@ -8,7 +8,9 @@ interface ContactSectionProps {
 }
 
 const ContactSection = ({ data }: ContactSectionProps) => {
-  const whatsappLink = `https://wa.me/${data.contact.whatsapp}`;
+  // Clean phone number - remove any non-digit characters except leading +
+  const cleanWhatsapp = data.contact.whatsapp?.replace(/[^0-9]/g, '') || '';
+  const whatsappLink = `https://wa.me/${cleanWhatsapp}`;
   
   return (
     <section id="contact" className="py-20 bg-muted/30">
