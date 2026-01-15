@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Upload, User, X } from "lucide-react";
+import { Upload, User, X, FileText, Download } from "lucide-react";
 
 interface HeroEditorProps {
   data: PortfolioData;
@@ -31,8 +31,24 @@ const HeroEditor = ({ data, onUpdate }: HeroEditorProps) => {
     reader.readAsDataURL(file);
   };
 
+  const handleCVUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      updateHero("cvFile", base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const removeImage = () => {
     updateHero("profileImage", "");
+  };
+
+  const removeCV = () => {
+    updateHero("cvFile", "");
   };
 
   return (
@@ -99,6 +115,77 @@ const HeroEditor = ({ data, onUpdate }: HeroEditorProps) => {
                   placeholder="https://example.com/your-photo.jpg"
                 />
               </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* CV Upload */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="w-5 h-5 text-primary" />
+            CV / Resume
+          </CardTitle>
+          <CardDescription>Upload your CV for visitors to download</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            {/* CV Preview */}
+            <div className="relative">
+              {data.hero.cvFile ? (
+                <div className="relative group">
+                  <div className="w-32 h-32 rounded-xl bg-primary/10 flex flex-col items-center justify-center border-2 border-primary/30">
+                    <FileText className="w-12 h-12 text-primary mb-2" />
+                    <span className="text-xs text-primary font-medium">CV Ready</span>
+                  </div>
+                  <button
+                    onClick={removeCV}
+                    className="absolute -top-2 -right-2 p-1.5 bg-destructive rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                  >
+                    <X className="w-4 h-4 text-destructive-foreground" />
+                  </button>
+                </div>
+              ) : (
+                <div className="w-32 h-32 rounded-xl bg-muted flex flex-col items-center justify-center border-2 border-dashed border-border">
+                  <FileText className="w-12 h-12 text-muted-foreground" />
+                  <span className="text-xs text-muted-foreground mt-1">No CV</span>
+                </div>
+              )}
+            </div>
+
+            {/* Upload Button */}
+            <div className="flex-1 space-y-3">
+              <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-primary/50 hover:bg-muted/20 transition-all duration-300">
+                <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+                <span className="text-sm font-medium text-foreground">Click to upload CV</span>
+                <span className="text-xs text-muted-foreground mt-1">PDF up to 10MB</span>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  className="hidden"
+                  onChange={handleCVUpload}
+                />
+              </label>
+              
+              <div className="space-y-2">
+                <Label htmlFor="cvUrl">Or paste CV URL</Label>
+                <Input
+                  id="cvUrl"
+                  value={data.hero.cvFile}
+                  onChange={(e) => updateHero("cvFile", e.target.value)}
+                  placeholder="https://example.com/your-cv.pdf"
+                />
+              </div>
+
+              {data.hero.cvFile && (
+                <Button variant="outline" size="sm" className="gap-2" asChild>
+                  <a href={data.hero.cvFile} download="CV.pdf" target="_blank" rel="noopener noreferrer">
+                    <Download className="w-4 h-4" />
+                    Preview CV
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
         </CardContent>

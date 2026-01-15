@@ -1,6 +1,6 @@
 import { PortfolioData } from "@/lib/portfolioData";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Phone, MapPin, ChevronDown } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, ChevronDown, Download } from "lucide-react";
 import { useEffect, useState } from "react";
 import CodeBackground from "./CodeBackground";
 
@@ -9,12 +9,25 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ data }: HeroSectionProps) => {
-  const whatsappLink = `https://wa.me/${data.contact.whatsapp}`;
+  const cleanWhatsapp = data.contact.whatsapp?.replace(/[^0-9]/g, '') || '';
+  const whatsappLink = `https://wa.me/${cleanWhatsapp}`;
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  const handleDownloadCV = () => {
+    if (data.hero.cvFile) {
+      const link = document.createElement('a');
+      link.href = data.hero.cvFile;
+      link.download = `${data.hero.name.replace(/\s+/g, '_')}_CV.pdf`;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
   
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -91,6 +104,17 @@ const HeroSection = ({ data }: HeroSectionProps) => {
                 WhatsApp
               </a>
             </Button>
+            {data.hero.cvFile && (
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="gap-2 pop-element"
+                onClick={handleDownloadCV}
+              >
+                <Download className="w-4 h-4" />
+                Download CV
+              </Button>
+            )}
           </div>
           
           {/* Social Links */}
