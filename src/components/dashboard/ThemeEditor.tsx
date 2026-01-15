@@ -104,14 +104,22 @@ const presetThemes: { name: string; colors: ThemeColors; isDark: boolean }[] = [
 ];
 
 const ThemeEditor = () => {
-  const { theme, updateTheme, resetTheme, isDarkMode, toggleDarkMode } = useTheme();
+  const { settings, updateLightTheme, updateDarkTheme, resetTheme, isDarkMode, toggleDarkMode } = useTheme();
 
-  const handleColorChange = (property: keyof ThemeColors, value: string) => {
-    updateTheme({ [property]: value });
+  const handleLightColorChange = (property: keyof ThemeColors, value: string) => {
+    updateLightTheme({ [property]: value });
   };
 
-  const applyPreset = (preset: ThemeColors) => {
-    updateTheme(preset);
+  const handleDarkColorChange = (property: keyof ThemeColors, value: string) => {
+    updateDarkTheme({ [property]: value });
+  };
+
+  const applyPreset = (preset: { colors: ThemeColors; isDark: boolean }) => {
+    if (preset.isDark) {
+      updateDarkTheme(preset.colors);
+    } else {
+      updateLightTheme(preset.colors);
+    }
   };
 
   // Convert HSL string to hex for color picker
@@ -195,13 +203,42 @@ const ThemeEditor = () => {
     return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
   };
 
+  const ColorPicker = ({ 
+    label, 
+    id, 
+    value, 
+    onChange 
+  }: { 
+    label: string; 
+    id: string; 
+    value: string; 
+    onChange: (value: string) => void;
+  }) => (
+    <div className="space-y-2">
+      <Label htmlFor={id}>{label}</Label>
+      <div className="flex items-center gap-4">
+        <input
+          id={id}
+          type="color"
+          value={hslToHex(value)}
+          onChange={(e) => onChange(hexToHsl(e.target.value))}
+          className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
+        />
+        <div
+          className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
+          style={{ background: `hsl(${value})` }}
+        />
+      </div>
+    </div>
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Theme & Colors</h2>
           <p className="text-muted-foreground">
-            Customize the look and feel of your portfolio
+            Customize Light and Dark mode colors separately
           </p>
         </div>
         <div className="flex gap-2">
@@ -211,13 +248,21 @@ const ThemeEditor = () => {
             className="gap-2"
           >
             {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            {isDarkMode ? "Light Mode" : "Dark Mode"}
+            {isDarkMode ? "View Light" : "View Dark"}
           </Button>
           <Button variant="outline" onClick={resetTheme} className="gap-2">
             <RotateCcw className="w-4 h-4" />
-            Reset
+            Reset All
           </Button>
         </div>
+      </div>
+
+      {/* Current Mode Indicator */}
+      <div className="flex items-center gap-3 p-4 rounded-lg bg-primary/10 border border-primary/20">
+        {isDarkMode ? <Moon className="w-5 h-5 text-primary" /> : <Sun className="w-5 h-5 text-primary" />}
+        <span className="text-foreground font-medium">
+          Currently viewing: <span className="text-primary">{isDarkMode ? "Dark Mode" : "Light Mode"}</span>
+        </span>
       </div>
 
       {/* Preset Themes */}
@@ -229,165 +274,155 @@ const ThemeEditor = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {presetThemes.map((preset) => (
-              <button
-                key={preset.name}
-                onClick={() => applyPreset(preset.colors)}
-                className="group relative p-4 rounded-xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-8 h-8 rounded-full ring-2 ring-offset-2 ring-offset-background transition-transform duration-300 group-hover:scale-110"
-                    style={{
-                      background: `hsl(${preset.colors.primary})`,
-                    }}
-                  />
-                  <span className="text-sm font-medium text-foreground">
-                    {preset.name}
-                  </span>
-                </div>
-              </button>
-            ))}
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                <Sun className="w-4 h-4" /> Light Mode Presets
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {presetThemes.filter(p => !p.isDark).map((preset) => (
+                  <button
+                    key={preset.name}
+                    onClick={() => applyPreset(preset)}
+                    className="group relative p-3 rounded-xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-6 h-6 rounded-full ring-2 ring-offset-2 ring-offset-background transition-transform duration-300 group-hover:scale-110"
+                        style={{ background: `hsl(${preset.colors.primary})` }}
+                      />
+                      <span className="text-xs font-medium text-foreground">{preset.name}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                <Moon className="w-4 h-4" /> Dark Mode Presets
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {presetThemes.filter(p => p.isDark).map((preset) => (
+                  <button
+                    key={preset.name}
+                    onClick={() => applyPreset(preset)}
+                    className="group relative p-3 rounded-xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-6 h-6 rounded-full ring-2 ring-offset-2 ring-offset-background transition-transform duration-300 group-hover:scale-110"
+                        style={{ background: `hsl(${preset.colors.primary})` }}
+                      />
+                      <span className="text-xs font-medium text-foreground">{preset.name}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Custom Colors */}
+      {/* Light Mode Colors */}
       <Card className="border-border/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Palette className="w-5 h-5 text-primary" />
-            Custom Colors
+            <Sun className="w-5 h-5 text-primary" />
+            Light Mode Colors
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Primary Color */}
-          <div className="space-y-2">
-            <Label htmlFor="primary-color">Primary Color</Label>
-            <div className="flex items-center gap-4">
-              <input
-                id="primary-color"
-                type="color"
-                value={hslToHex(theme.primary)}
-                onChange={(e) =>
-                  handleColorChange("primary", hexToHsl(e.target.value))
-                }
-                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
-              />
-              <div
-                className="flex-1 h-10 rounded-lg transition-all duration-300"
-                style={{ background: `hsl(${theme.primary})` }}
-              />
-            </div>
-          </div>
+        <CardContent className="grid md:grid-cols-2 gap-6">
+          <ColorPicker 
+            label="Primary Color" 
+            id="light-primary" 
+            value={settings.light.primary} 
+            onChange={(v) => handleLightColorChange("primary", v)} 
+          />
+          <ColorPicker 
+            label="Accent Color" 
+            id="light-accent" 
+            value={settings.light.accent} 
+            onChange={(v) => handleLightColorChange("accent", v)} 
+          />
+          <ColorPicker 
+            label="Background Color" 
+            id="light-background" 
+            value={settings.light.background} 
+            onChange={(v) => handleLightColorChange("background", v)} 
+          />
+          <ColorPicker 
+            label="Card Background" 
+            id="light-card" 
+            value={settings.light.cardBackground} 
+            onChange={(v) => handleLightColorChange("cardBackground", v)} 
+          />
+          <ColorPicker 
+            label="Text Color" 
+            id="light-foreground" 
+            value={settings.light.foreground} 
+            onChange={(v) => handleLightColorChange("foreground", v)} 
+          />
+          <ColorPicker 
+            label="Muted Text Color" 
+            id="light-muted" 
+            value={settings.light.mutedForeground} 
+            onChange={(v) => handleLightColorChange("mutedForeground", v)} 
+          />
+        </CardContent>
+      </Card>
 
-          {/* Accent Color */}
-          <div className="space-y-2">
-            <Label htmlFor="accent-color">Accent Color</Label>
-            <div className="flex items-center gap-4">
-              <input
-                id="accent-color"
-                type="color"
-                value={hslToHex(theme.accent)}
-                onChange={(e) =>
-                  handleColorChange("accent", hexToHsl(e.target.value))
-                }
-                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
-              />
-              <div
-                className="flex-1 h-10 rounded-lg transition-all duration-300"
-                style={{ background: `hsl(${theme.accent})` }}
-              />
-            </div>
-          </div>
-
-          {/* Background Color */}
-          <div className="space-y-2">
-            <Label htmlFor="background-color">Background Color</Label>
-            <div className="flex items-center gap-4">
-              <input
-                id="background-color"
-                type="color"
-                value={hslToHex(theme.background)}
-                onChange={(e) =>
-                  handleColorChange("background", hexToHsl(e.target.value))
-                }
-                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
-              />
-              <div
-                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
-                style={{ background: `hsl(${theme.background})` }}
-              />
-            </div>
-          </div>
-
-          {/* Card Background Color */}
-          <div className="space-y-2">
-            <Label htmlFor="card-background-color">Card Background</Label>
-            <div className="flex items-center gap-4">
-              <input
-                id="card-background-color"
-                type="color"
-                value={hslToHex(theme.cardBackground)}
-                onChange={(e) =>
-                  handleColorChange("cardBackground", hexToHsl(e.target.value))
-                }
-                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
-              />
-              <div
-                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
-                style={{ background: `hsl(${theme.cardBackground})` }}
-              />
-            </div>
-          </div>
-
-          {/* Text Color */}
-          <div className="space-y-2">
-            <Label htmlFor="foreground-color">Text Color</Label>
-            <div className="flex items-center gap-4">
-              <input
-                id="foreground-color"
-                type="color"
-                value={hslToHex(theme.foreground)}
-                onChange={(e) =>
-                  handleColorChange("foreground", hexToHsl(e.target.value))
-                }
-                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
-              />
-              <div
-                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
-                style={{ background: `hsl(${theme.foreground})` }}
-              />
-            </div>
-          </div>
-
-          {/* Muted Text Color */}
-          <div className="space-y-2">
-            <Label htmlFor="muted-foreground-color">Muted Text Color</Label>
-            <div className="flex items-center gap-4">
-              <input
-                id="muted-foreground-color"
-                type="color"
-                value={hslToHex(theme.mutedForeground)}
-                onChange={(e) =>
-                  handleColorChange("mutedForeground", hexToHsl(e.target.value))
-                }
-                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
-              />
-              <div
-                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
-                style={{ background: `hsl(${theme.mutedForeground})` }}
-              />
-            </div>
-          </div>
+      {/* Dark Mode Colors */}
+      <Card className="border-border/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Moon className="w-5 h-5 text-primary" />
+            Dark Mode Colors
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid md:grid-cols-2 gap-6">
+          <ColorPicker 
+            label="Primary Color" 
+            id="dark-primary" 
+            value={settings.dark.primary} 
+            onChange={(v) => handleDarkColorChange("primary", v)} 
+          />
+          <ColorPicker 
+            label="Accent Color" 
+            id="dark-accent" 
+            value={settings.dark.accent} 
+            onChange={(v) => handleDarkColorChange("accent", v)} 
+          />
+          <ColorPicker 
+            label="Background Color" 
+            id="dark-background" 
+            value={settings.dark.background} 
+            onChange={(v) => handleDarkColorChange("background", v)} 
+          />
+          <ColorPicker 
+            label="Card Background" 
+            id="dark-card" 
+            value={settings.dark.cardBackground} 
+            onChange={(v) => handleDarkColorChange("cardBackground", v)} 
+          />
+          <ColorPicker 
+            label="Text Color" 
+            id="dark-foreground" 
+            value={settings.dark.foreground} 
+            onChange={(v) => handleDarkColorChange("foreground", v)} 
+          />
+          <ColorPicker 
+            label="Muted Text Color" 
+            id="dark-muted" 
+            value={settings.dark.mutedForeground} 
+            onChange={(v) => handleDarkColorChange("mutedForeground", v)} 
+          />
         </CardContent>
       </Card>
 
       {/* Live Preview */}
       <Card className="border-border/50">
         <CardHeader>
-          <CardTitle>Live Preview</CardTitle>
+          <CardTitle>Live Preview ({isDarkMode ? "Dark Mode" : "Light Mode"})</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -410,7 +445,7 @@ const ThemeEditor = () => {
             <div className="p-4 rounded-lg bg-card border border-border/50 transition-all duration-300 hover:border-primary/50 hover:shadow-lg">
               <p className="text-foreground font-medium">Sample Card</p>
               <p className="text-muted-foreground text-sm">
-                This is how your cards will look
+                This is how your cards will look in {isDarkMode ? "dark" : "light"} mode
               </p>
             </div>
           </div>

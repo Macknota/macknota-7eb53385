@@ -9,10 +9,15 @@ export interface ThemeColors {
   mutedForeground: string;
 }
 
-const THEME_STORAGE_KEY = "portfolio_theme";
-const DARK_MODE_KEY = "portfolio_dark_mode";
+export interface ThemeSettings {
+  light: ThemeColors;
+  dark: ThemeColors;
+  isDarkMode: boolean;
+}
 
-const defaultTheme: ThemeColors = {
+const THEME_STORAGE_KEY = "portfolio_theme_settings";
+
+const defaultLightTheme: ThemeColors = {
   primary: "266 100% 50%",
   accent: "280 100% 60%",
   background: "0 0% 100%",
@@ -30,31 +35,28 @@ const defaultDarkTheme: ThemeColors = {
   mutedForeground: "0 0% 65%",
 };
 
-export const getStoredTheme = (): ThemeColors => {
-  if (typeof window === "undefined") return defaultTheme;
+const defaultSettings: ThemeSettings = {
+  light: defaultLightTheme,
+  dark: defaultDarkTheme,
+  isDarkMode: false,
+};
+
+export const getStoredSettings = (): ThemeSettings => {
+  if (typeof window === "undefined") return defaultSettings;
   
   const stored = localStorage.getItem(THEME_STORAGE_KEY);
   if (stored) {
     try {
-      return { ...defaultTheme, ...JSON.parse(stored) };
+      return { ...defaultSettings, ...JSON.parse(stored) };
     } catch {
-      return defaultTheme;
+      return defaultSettings;
     }
   }
-  return defaultTheme;
+  return defaultSettings;
 };
 
-export const getStoredDarkMode = (): boolean => {
-  if (typeof window === "undefined") return false;
-  return localStorage.getItem(DARK_MODE_KEY) === "true";
-};
-
-export const saveTheme = (theme: ThemeColors): void => {
-  localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(theme));
-};
-
-export const saveDarkMode = (isDark: boolean): void => {
-  localStorage.setItem(DARK_MODE_KEY, isDark.toString());
+export const saveSettings = (settings: ThemeSettings): void => {
+  localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(settings));
 };
 
 export const applyTheme = (theme: ThemeColors, isDarkMode: boolean): void => {
@@ -75,7 +77,6 @@ export const applyTheme = (theme: ThemeColors, isDarkMode: boolean): void => {
   
   // Update secondary and muted based on dark mode
   if (isDarkMode) {
-    // Dark mode adjustments
     root.style.setProperty("--secondary", "0 0% 18%");
     root.style.setProperty("--secondary-foreground", "0 0% 98%");
     root.style.setProperty("--muted", "0 0% 18%");
@@ -84,7 +85,6 @@ export const applyTheme = (theme: ThemeColors, isDarkMode: boolean): void => {
     root.style.setProperty("--popover", theme.cardBackground);
     root.style.setProperty("--popover-foreground", theme.foreground);
   } else {
-    // Light mode adjustments
     root.style.setProperty("--secondary", "0 0% 92%");
     root.style.setProperty("--secondary-foreground", "0 0% 12%");
     root.style.setProperty("--muted", "0 0% 96%");
@@ -96,42 +96,72 @@ export const applyTheme = (theme: ThemeColors, isDarkMode: boolean): void => {
 };
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<ThemeColors>(defaultTheme);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [settings, setSettings] = useState<ThemeSettings>(defaultSettings);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const storedTheme = getStoredTheme();
-    const storedDarkMode = getStoredDarkMode();
-    setTheme(storedTheme);
-    setIsDarkMode(storedDarkMode);
-    applyTheme(storedTheme, storedDarkMode);
+    const storedSettings = getStoredSettings();
+    setSettings(storedSettings);
+    const activeTheme = storedSettings.isDarkMode ? storedSettings.dark : storedSettings.light;
+    applyTheme(activeTheme, storedSettings.isDarkMode);
     setIsLoaded(true);
   }, []);
 
-  const updateTheme = (newTheme: Partial<ThemeColors>) => {
-    const updated = { ...theme, ...newTheme };
-    setTheme(updated);
-    saveTheme(updated);
-    applyTheme(updated, isDarkMode);
+  const updateLightTheme = (newTheme: Partial<ThemeColors>) => {
+    const updated = { ...settings, light: { ...settings.light, ...newTheme } };
+    setSettings(updated);
+    saveSettings(updated);
+    if (!settings.isDarkMode) {
+      applyTheme(updated.light, false);
+    }
+  };
+
+  const updateDarkTheme = (newTheme: Partial<ThemeColors>) => {
+    const updated = { ...settings, dark: { ...settings.dark, ...newTheme } };
+    setSettings(updated);
+    saveSettings(updated);
+    if (settings.isDarkMode) {
+      applyTheme(updated.dark, true);
+    }
   };
 
   const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode;
-    const newTheme = newDarkMode ? defaultDarkTheme : defaultTheme;
-    setIsDarkMode(newDarkMode);
-    setTheme(newTheme);
-    saveDarkMode(newDarkMode);
-    saveTheme(newTheme);
-    applyTheme(newTheme, newDarkMode);
+    const newIsDark = !settings.isDarkMode;
+    const updated = { ...settings, isDarkMode: newIsDark };
+    setSettings(updated);
+    saveSettings(updated);
+    const activeTheme = newIsDark ? settings.dark : settings.light;
+    applyTheme(activeTheme, newIsDark);
   };
 
   const resetTheme = () => {
-    const baseTheme = isDarkMode ? defaultDarkTheme : defaultTheme;
-    setTheme(baseTheme);
-    saveTheme(baseTheme);
-    applyTheme(baseTheme, isDarkMode);
+    setSettings(defaultSettings);
+    saveSettings(defaultSettings);
+    const activeTheme = defaultSettings.isDarkMode ? defaultSettings.dark : defaultSettings.light;
+    applyTheme(activeTheme, defaultSettings.isDarkMode);
   };
 
-  return { theme, updateTheme, resetTheme, isLoaded, defaultTheme, defaultDarkTheme, isDarkMode, toggleDarkMode };
+  // For backward compatibility
+  const theme = settings.isDarkMode ? settings.dark : settings.light;
+  const updateTheme = (newTheme: Partial<ThemeColors>) => {
+    if (settings.isDarkMode) {
+      updateDarkTheme(newTheme);
+    } else {
+      updateLightTheme(newTheme);
+    }
+  };
+
+  return { 
+    theme, 
+    settings,
+    updateTheme, 
+    updateLightTheme,
+    updateDarkTheme,
+    resetTheme, 
+    isLoaded, 
+    defaultLightTheme, 
+    defaultDarkTheme, 
+    isDarkMode: settings.isDarkMode, 
+    toggleDarkMode 
+  };
 };
