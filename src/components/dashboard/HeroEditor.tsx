@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Upload, User, X, FileText, Download, Sparkles } from "lucide-react";
+import { Upload, User, X, FileText, Download, Sparkles, Code, Type } from "lucide-react";
 
 interface HeroEditorProps {
   data: PortfolioData;
@@ -240,9 +240,67 @@ const HeroEditor = ({ data, onUpdate }: HeroEditorProps) => {
         </CardContent>
       </Card>
 
+      {/* Logo & Footer */}
       <Card>
         <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Code className="w-5 h-5 text-primary" />
+            Logo & Footer
+          </CardTitle>
+          <CardDescription>Customize your site branding</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="logoText">Logo Text</Label>
+            <Input
+              id="logoText"
+              value={data.hero.logoText}
+              onChange={(e) => updateHero("logoText", e.target.value)}
+              placeholder="Adel"
+            />
+            <p className="text-xs text-muted-foreground">
+              Preview: &lt;{data.hero.logoText || "Adel"}/&gt;
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="footerText">Footer Text</Label>
+            <Input
+              id="footerText"
+              value={data.hero.footerText}
+              onChange={(e) => updateHero("footerText", e.target.value)}
+              placeholder="Built with"
+            />
+            <p className="text-xs text-muted-foreground">
+              Preview: © 2026 {data.hero.name}. {data.hero.footerText || "Built with"} ❤️
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between pt-2">
+            <div>
+              <Label htmlFor="showCvButton">Show CV Download Button</Label>
+              <p className="text-xs text-muted-foreground">Display download CV button on hero</p>
+            </div>
+            <Switch
+              id="showCvButton"
+              checked={data.hero.showCvButton}
+              onCheckedChange={(checked) => 
+                onUpdate({
+                  ...data,
+                  hero: { ...data.hero, showCvButton: checked },
+                })
+              }
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Type className="w-5 h-5 text-primary" />
+            Personal Information
+          </CardTitle>
           <CardDescription>Your name and title displayed on the hero section</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

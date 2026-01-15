@@ -18,21 +18,21 @@ export interface ThemeSettings {
 const THEME_STORAGE_KEY = "portfolio_theme_settings";
 
 const defaultLightTheme: ThemeColors = {
-  primary: "266 100% 50%",
-  accent: "280 100% 60%",
-  background: "0 0% 100%",
-  foreground: "265 4% 12.9%",
-  cardBackground: "0 0% 98%",
-  mutedForeground: "265 4% 45%",
+  primary: "30 60% 45%",
+  accent: "38 70% 55%",
+  background: "40 30% 97%",
+  foreground: "25 25% 15%",
+  cardBackground: "38 25% 94%",
+  mutedForeground: "30 15% 45%",
 };
 
 const defaultDarkTheme: ThemeColors = {
-  primary: "270 100% 70%",
-  accent: "280 100% 60%",
-  background: "0 0% 8%",
-  foreground: "0 0% 98%",
-  cardBackground: "0 0% 12%",
-  mutedForeground: "0 0% 65%",
+  primary: "38 70% 55%",
+  accent: "30 60% 50%",
+  background: "25 20% 8%",
+  foreground: "38 30% 92%",
+  cardBackground: "25 18% 12%",
+  mutedForeground: "30 15% 55%",
 };
 
 const defaultSettings: ThemeSettings = {
