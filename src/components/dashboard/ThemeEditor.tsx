@@ -1,12 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Palette, RotateCcw, Sparkles } from "lucide-react";
+import { Palette, RotateCcw, Sparkles, Sun, Moon } from "lucide-react";
 import { useTheme, ThemeColors } from "@/hooks/useTheme";
 
-const presetThemes: { name: string; colors: ThemeColors }[] = [
+const presetThemes: { name: string; colors: ThemeColors; isDark: boolean }[] = [
   {
     name: "Purple Light",
+    isDark: false,
     colors: {
       primary: "266 100% 50%",
       accent: "280 100% 60%",
@@ -18,17 +19,19 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
   },
   {
     name: "Purple Dark",
+    isDark: true,
     colors: {
       primary: "270 100% 70%",
       accent: "280 100% 60%",
       background: "0 0% 8%",
-      foreground: "248 0.3% 98.4%",
+      foreground: "0 0% 98%",
       cardBackground: "0 0% 12%",
-      mutedForeground: "265 4% 65%",
+      mutedForeground: "0 0% 65%",
     },
   },
   {
     name: "Blue Ocean",
+    isDark: false,
     colors: {
       primary: "210 100% 50%",
       accent: "200 100% 60%",
@@ -40,6 +43,7 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
   },
   {
     name: "Blue Night",
+    isDark: true,
     colors: {
       primary: "210 100% 60%",
       accent: "200 100% 70%",
@@ -51,6 +55,7 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
   },
   {
     name: "Green Forest",
+    isDark: false,
     colors: {
       primary: "142 70% 45%",
       accent: "160 60% 50%",
@@ -62,6 +67,7 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
   },
   {
     name: "Green Dark",
+    isDark: true,
     colors: {
       primary: "142 70% 55%",
       accent: "160 60% 60%",
@@ -73,6 +79,7 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
   },
   {
     name: "Orange Sunset",
+    isDark: false,
     colors: {
       primary: "25 95% 55%",
       accent: "35 100% 60%",
@@ -84,6 +91,7 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
   },
   {
     name: "Orange Night",
+    isDark: true,
     colors: {
       primary: "25 95% 60%",
       accent: "35 100% 65%",
@@ -96,7 +104,7 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
 ];
 
 const ThemeEditor = () => {
-  const { theme, updateTheme, resetTheme } = useTheme();
+  const { theme, updateTheme, resetTheme, isDarkMode, toggleDarkMode } = useTheme();
 
   const handleColorChange = (property: keyof ThemeColors, value: string) => {
     updateTheme({ [property]: value });
@@ -196,10 +204,20 @@ const ThemeEditor = () => {
             Customize the look and feel of your portfolio
           </p>
         </div>
-        <Button variant="outline" onClick={resetTheme} className="gap-2">
-          <RotateCcw className="w-4 h-4" />
-          Reset
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            onClick={toggleDarkMode} 
+            className="gap-2"
+          >
+            {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {isDarkMode ? "Light Mode" : "Dark Mode"}
+          </Button>
+          <Button variant="outline" onClick={resetTheme} className="gap-2">
+            <RotateCcw className="w-4 h-4" />
+            Reset
+          </Button>
+        </div>
       </div>
 
       {/* Preset Themes */}
