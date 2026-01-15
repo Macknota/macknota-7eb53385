@@ -6,12 +6,25 @@ import { useTheme, ThemeColors } from "@/hooks/useTheme";
 
 const presetThemes: { name: string; colors: ThemeColors }[] = [
   {
-    name: "Purple (Default)",
+    name: "Purple Light",
     colors: {
       primary: "266 100% 50%",
       accent: "280 100% 60%",
       background: "0 0% 100%",
       foreground: "265 4% 12.9%",
+      cardBackground: "0 0% 98%",
+      mutedForeground: "265 4% 45%",
+    },
+  },
+  {
+    name: "Purple Dark",
+    colors: {
+      primary: "270 100% 70%",
+      accent: "280 100% 60%",
+      background: "0 0% 8%",
+      foreground: "248 0.3% 98.4%",
+      cardBackground: "0 0% 12%",
+      mutedForeground: "265 4% 65%",
     },
   },
   {
@@ -21,6 +34,19 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
       accent: "200 100% 60%",
       background: "0 0% 100%",
       foreground: "220 10% 10%",
+      cardBackground: "210 20% 98%",
+      mutedForeground: "220 10% 45%",
+    },
+  },
+  {
+    name: "Blue Night",
+    colors: {
+      primary: "210 100% 60%",
+      accent: "200 100% 70%",
+      background: "220 20% 8%",
+      foreground: "210 20% 98%",
+      cardBackground: "220 20% 12%",
+      mutedForeground: "210 10% 60%",
     },
   },
   {
@@ -30,6 +56,19 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
       accent: "160 60% 50%",
       background: "0 0% 100%",
       foreground: "150 10% 10%",
+      cardBackground: "140 20% 97%",
+      mutedForeground: "150 10% 45%",
+    },
+  },
+  {
+    name: "Green Dark",
+    colors: {
+      primary: "142 70% 55%",
+      accent: "160 60% 60%",
+      background: "150 20% 6%",
+      foreground: "140 20% 98%",
+      cardBackground: "150 20% 10%",
+      mutedForeground: "150 10% 60%",
     },
   },
   {
@@ -39,24 +78,19 @@ const presetThemes: { name: string; colors: ThemeColors }[] = [
       accent: "35 100% 60%",
       background: "0 0% 100%",
       foreground: "30 10% 10%",
+      cardBackground: "30 30% 97%",
+      mutedForeground: "30 10% 45%",
     },
   },
   {
-    name: "Pink Rose",
+    name: "Orange Night",
     colors: {
-      primary: "330 80% 55%",
-      accent: "340 90% 65%",
-      background: "0 0% 100%",
-      foreground: "330 10% 10%",
-    },
-  },
-  {
-    name: "Teal Modern",
-    colors: {
-      primary: "175 80% 40%",
-      accent: "185 70% 50%",
-      background: "0 0% 100%",
-      foreground: "180 10% 10%",
+      primary: "25 95% 60%",
+      accent: "35 100% 65%",
+      background: "20 20% 6%",
+      foreground: "30 20% 98%",
+      cardBackground: "20 20% 10%",
+      mutedForeground: "30 10% 60%",
     },
   },
 ];
@@ -246,6 +280,86 @@ const ThemeEditor = () => {
               <div
                 className="flex-1 h-10 rounded-lg transition-all duration-300"
                 style={{ background: `hsl(${theme.accent})` }}
+              />
+            </div>
+          </div>
+
+          {/* Background Color */}
+          <div className="space-y-2">
+            <Label htmlFor="background-color">Background Color</Label>
+            <div className="flex items-center gap-4">
+              <input
+                id="background-color"
+                type="color"
+                value={hslToHex(theme.background)}
+                onChange={(e) =>
+                  handleColorChange("background", hexToHsl(e.target.value))
+                }
+                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
+              />
+              <div
+                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
+                style={{ background: `hsl(${theme.background})` }}
+              />
+            </div>
+          </div>
+
+          {/* Card Background Color */}
+          <div className="space-y-2">
+            <Label htmlFor="card-background-color">Card Background</Label>
+            <div className="flex items-center gap-4">
+              <input
+                id="card-background-color"
+                type="color"
+                value={hslToHex(theme.cardBackground)}
+                onChange={(e) =>
+                  handleColorChange("cardBackground", hexToHsl(e.target.value))
+                }
+                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
+              />
+              <div
+                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
+                style={{ background: `hsl(${theme.cardBackground})` }}
+              />
+            </div>
+          </div>
+
+          {/* Text Color */}
+          <div className="space-y-2">
+            <Label htmlFor="foreground-color">Text Color</Label>
+            <div className="flex items-center gap-4">
+              <input
+                id="foreground-color"
+                type="color"
+                value={hslToHex(theme.foreground)}
+                onChange={(e) =>
+                  handleColorChange("foreground", hexToHsl(e.target.value))
+                }
+                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
+              />
+              <div
+                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
+                style={{ background: `hsl(${theme.foreground})` }}
+              />
+            </div>
+          </div>
+
+          {/* Muted Text Color */}
+          <div className="space-y-2">
+            <Label htmlFor="muted-foreground-color">Muted Text Color</Label>
+            <div className="flex items-center gap-4">
+              <input
+                id="muted-foreground-color"
+                type="color"
+                value={hslToHex(theme.mutedForeground)}
+                onChange={(e) =>
+                  handleColorChange("mutedForeground", hexToHsl(e.target.value))
+                }
+                className="w-16 h-10 rounded-lg border border-border cursor-pointer transition-transform hover:scale-105"
+              />
+              <div
+                className="flex-1 h-10 rounded-lg transition-all duration-300 border border-border/50"
+                style={{ background: `hsl(${theme.mutedForeground})` }}
               />
             </div>
           </div>
