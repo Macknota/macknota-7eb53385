@@ -34,7 +34,7 @@ const TechBadge = ({ tech }: { tech: string }) => {
   return (
     <Badge 
       variant="outline"
-      className={`${colors.bg} ${colors.border} ${colors.text} border font-medium pop-badge backdrop-blur-sm`}
+      className={`${colors.bg} ${colors.border} ${colors.text} border font-medium pop-badge backdrop-blur-sm text-[10px] md:text-xs px-1.5 md:px-2 py-0.5`}
     >
       {tech}
     </Badge>
@@ -63,22 +63,22 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
   };
 
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="container px-4">
+    <section id="projects" className="py-12 md:py-20 bg-muted/30">
+      <div className="container px-4 md:px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Title */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
               Featured Projects
             </h2>
-            <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+            <div className="w-16 md:w-20 h-1 bg-primary mx-auto rounded-full" />
+            <p className="text-muted-foreground mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base px-2">
               Real-world projects showcasing clean architecture and best practices
             </p>
           </div>
           
           {/* Projects */}
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             {data.projects.map((project, index) => {
               const images = project.images || [];
               const currentIdx = currentImageIndex[index] || 0;
@@ -92,22 +92,22 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                   <div className="grid md:grid-cols-5 gap-0">
                     {/* Content Side */}
                     <div className="md:col-span-3 order-2 md:order-1">
-                      <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                          <CardTitle className="text-xl md:text-2xl text-foreground">
+                      <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent p-4 md:p-6">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+                          <CardTitle className="text-lg md:text-2xl text-foreground">
                             {project.name}
                           </CardTitle>
                           {project.link && project.link !== "#" && (
-                            <Button variant="outline" size="sm" asChild className="w-fit pop-element glow-effect">
+                            <Button variant="outline" size="sm" asChild className="w-fit pop-element glow-effect text-xs md:text-sm">
                               <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="w-4 h-4 mr-2" />
+                                <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" />
                                 View Project
                               </a>
                             </Button>
                           )}
                         </div>
                         {/* Technologies with brand-colored badges */}
-                        <div className="flex flex-wrap gap-2 mt-4">
+                        <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-4">
                           {project.technologies.map((tech, techIndex) => (
                             <TechBadge key={techIndex} tech={tech} />
                           ))}
@@ -117,7 +117,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     
                     {/* Image Side - Always visible with placeholder */}
                     <div className="md:col-span-2 order-1 md:order-2 relative group">
-                      <div className="aspect-video md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[200px]">
+                      <div className="aspect-video md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[140px] md:min-h-[200px]">
                         {hasImages ? (
                           <img
                             src={images[currentIdx]}
@@ -125,10 +125,10 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
-                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 border-l border-border/30">
-                            <ImagePlaceholder className="w-16 h-16 text-muted-foreground/40 mb-3" />
-                            <span className="text-sm text-muted-foreground/60 font-medium">Architecture Diagram</span>
-                            <span className="text-xs text-muted-foreground/40 mt-1">Upload via Dashboard</span>
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 border-l border-border/30 py-4 md:py-0">
+                            <ImagePlaceholder className="w-10 h-10 md:w-16 md:h-16 text-muted-foreground/40 mb-2 md:mb-3" />
+                            <span className="text-xs md:text-sm text-muted-foreground/60 font-medium">Architecture Diagram</span>
+                            <span className="text-[10px] md:text-xs text-muted-foreground/40 mt-1">Upload via Dashboard</span>
                           </div>
                         )}
                       </div>
@@ -165,51 +165,51 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                       )}
                     </div>
                   </div>
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground mb-6">
+                  <CardContent className="p-4 md:p-6">
+                    <p className="text-muted-foreground mb-4 md:mb-6 text-sm md:text-base leading-relaxed">
                       {project.description}
                     </p>
 
                     {/* Challenge / Solution / Result */}
                     {(project.challenge || project.solution || project.result) && (
-                      <div className="grid md:grid-cols-3 gap-4 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
                         {project.challenge && (
-                          <div className="p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Target className="w-5 h-5 text-primary" />
-                              <h5 className="font-semibold text-foreground">Challenge</h5>
+                          <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
+                            <div className="flex items-center gap-2 mb-1.5 md:mb-2">
+                              <Target className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                              <h5 className="font-semibold text-foreground text-sm md:text-base">Challenge</h5>
                             </div>
-                            <p className="text-sm text-muted-foreground">{project.challenge}</p>
+                            <p className="text-xs md:text-sm text-muted-foreground">{project.challenge}</p>
                           </div>
                         )}
                         {project.solution && (
-                          <div className="p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Lightbulb className="w-5 h-5 text-primary" />
-                              <h5 className="font-semibold text-foreground">Solution</h5>
+                          <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
+                            <div className="flex items-center gap-2 mb-1.5 md:mb-2">
+                              <Lightbulb className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                              <h5 className="font-semibold text-foreground text-sm md:text-base">Solution</h5>
                             </div>
-                            <p className="text-sm text-muted-foreground">{project.solution}</p>
+                            <p className="text-xs md:text-sm text-muted-foreground">{project.solution}</p>
                           </div>
                         )}
                         {project.result && (
-                          <div className="p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Trophy className="w-5 h-5 text-primary" />
-                              <h5 className="font-semibold text-foreground">Result</h5>
+                          <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
+                            <div className="flex items-center gap-2 mb-1.5 md:mb-2">
+                              <Trophy className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                              <h5 className="font-semibold text-foreground text-sm md:text-base">Result</h5>
                             </div>
-                            <p className="text-sm text-muted-foreground">{project.result}</p>
+                            <p className="text-xs md:text-sm text-muted-foreground">{project.result}</p>
                           </div>
                         )}
                       </div>
                     )}
                     
                     {/* Features */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-foreground">Key Features:</h4>
-                      <ul className="space-y-2">
+                    <div className="space-y-2 md:space-y-3">
+                      <h4 className="font-semibold text-foreground text-sm md:text-base">Key Features:</h4>
+                      <ul className="space-y-1.5 md:space-y-2">
                         {project.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-start gap-3 text-sm text-muted-foreground group/feature">
-                            <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0 transition-transform duration-200 group-hover/feature:scale-125" />
+                          <li key={featureIndex} className="flex items-start gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground group/feature">
+                            <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-0.5 flex-shrink-0 transition-transform duration-200 group-hover/feature:scale-125" />
                             <span className="group-hover/feature:text-foreground transition-colors duration-200">{feature}</span>
                           </li>
                         ))}

@@ -18,22 +18,22 @@ const skillCategories = [
 
 const SkillsSection = ({ data }: SkillsSectionProps) => {
   return (
-    <section id="skills" className="py-20">
+    <section id="skills" className="py-12 md:py-20">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Title */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
               Technical Skills
             </h2>
-            <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+            <div className="w-16 md:w-20 h-1 bg-primary mx-auto rounded-full" />
+            <p className="text-muted-foreground mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base px-2">
               A comprehensive toolkit for building robust, scalable backend solutions
             </p>
           </div>
           
           {/* Skills Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {skillCategories.map((category) => {
               const Icon = category.icon;
               const skills = data.skills[category.key];
@@ -43,21 +43,21 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
                   key={category.key}
                   className="border-border/50 bg-card backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group interactive-card slide-up"
                 >
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-3 text-lg text-card-foreground">
-                      <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
-                        <Icon className="w-5 h-5 text-primary" />
+                  <CardHeader className="pb-2 md:pb-3 p-4 md:p-6">
+                    <CardTitle className="flex items-center gap-2 md:gap-3 text-sm md:text-lg text-card-foreground">
+                      <div className="p-1.5 md:p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 pop-icon">
+                        <Icon className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                       </div>
                       <span className="text-foreground">{category.title}</span>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
+                  <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                    <div className="flex flex-wrap gap-1.5 md:gap-2">
                       {skills.map((skill, index) => (
                         <Badge 
                           key={index} 
                           variant="secondary"
-                          className="bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200 cursor-default pop-badge"
+                          className="bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200 cursor-default pop-badge text-xs md:text-sm px-2 py-0.5 md:px-2.5 md:py-0.5"
                         >
                           {skill}
                         </Badge>
