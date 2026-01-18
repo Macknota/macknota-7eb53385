@@ -17,28 +17,29 @@ export interface ThemeSettings {
 
 const THEME_STORAGE_KEY = "portfolio_theme_settings";
 
+// Deep Dark Theme with Electric Purple/Neon Blue
 const defaultLightTheme: ThemeColors = {
-  primary: "30 60% 45%",
-  accent: "38 70% 55%",
-  background: "40 30% 97%",
-  foreground: "25 25% 15%",
-  cardBackground: "38 25% 94%",
-  mutedForeground: "30 15% 45%",
+  primary: "263 90% 60%",        // Electric Purple
+  accent: "199 100% 55%",        // Neon Blue
+  background: "222 47% 8%",      // #0B0F19 dark blue-grey
+  foreground: "0 0% 100%",       // White text
+  cardBackground: "222 40% 12%", // Slightly lighter card
+  mutedForeground: "220 15% 65%", // Muted grey
 };
 
 const defaultDarkTheme: ThemeColors = {
-  primary: "38 70% 55%",
-  accent: "30 60% 50%",
-  background: "25 20% 8%",
-  foreground: "38 30% 92%",
-  cardBackground: "25 18% 12%",
-  mutedForeground: "30 15% 55%",
+  primary: "263 90% 60%",        // Electric Purple
+  accent: "199 100% 55%",        // Neon Blue
+  background: "222 47% 8%",      // #0B0F19 dark blue-grey
+  foreground: "0 0% 100%",       // White text
+  cardBackground: "222 40% 12%", // Slightly lighter card
+  mutedForeground: "220 15% 65%", // Muted grey
 };
 
 const defaultSettings: ThemeSettings = {
   light: defaultLightTheme,
   dark: defaultDarkTheme,
-  isDarkMode: false,
+  isDarkMode: true,
 };
 
 export const getStoredSettings = (): ThemeSettings => {
