@@ -3,7 +3,43 @@ import { PortfolioData } from "@/lib/portfolioData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Check, ChevronLeft, ChevronRight, Target, Lightbulb, Trophy } from "lucide-react";
+import { ExternalLink, Check, ChevronLeft, ChevronRight, Target, Lightbulb, Trophy, Image as ImagePlaceholder } from "lucide-react";
+
+// Tech brand colors mapping
+const techColors: Record<string, { bg: string; border: string; text: string }> = {
+  ".NET 8": { bg: "bg-[#512BD4]/20", border: "border-[#512BD4]", text: "text-[#512BD4]" },
+  ".NET 6/7/8": { bg: "bg-[#512BD4]/20", border: "border-[#512BD4]", text: "text-[#512BD4]" },
+  "EF Core": { bg: "bg-[#68217A]/20", border: "border-[#68217A]", text: "text-[#B565D9]" },
+  "SQL Server": { bg: "bg-[#CC2927]/20", border: "border-[#CC2927]", text: "text-[#CC2927]" },
+  "Redis": { bg: "bg-[#DC382D]/20", border: "border-[#DC382D]", text: "text-[#DC382D]" },
+  "Identity": { bg: "bg-[#0078D7]/20", border: "border-[#0078D7]", text: "text-[#0078D7]" },
+  "AutoMapper": { bg: "bg-[#BE2026]/20", border: "border-[#BE2026]", text: "text-[#E65A5F]" },
+  "Docker": { bg: "bg-[#2496ED]/20", border: "border-[#2496ED]", text: "text-[#2496ED]" },
+  "C#": { bg: "bg-[#239120]/20", border: "border-[#239120]", text: "text-[#68BC71]" },
+  "React": { bg: "bg-[#61DAFB]/20", border: "border-[#61DAFB]", text: "text-[#61DAFB]" },
+  "TypeScript": { bg: "bg-[#3178C6]/20", border: "border-[#3178C6]", text: "text-[#3178C6]" },
+  "PostgreSQL": { bg: "bg-[#336791]/20", border: "border-[#336791]", text: "text-[#6B9AC4]" },
+  "MongoDB": { bg: "bg-[#47A248]/20", border: "border-[#47A248]", text: "text-[#47A248]" },
+  "Azure": { bg: "bg-[#0078D4]/20", border: "border-[#0078D4]", text: "text-[#0078D4]" },
+  "AWS": { bg: "bg-[#FF9900]/20", border: "border-[#FF9900]", text: "text-[#FF9900]" },
+  "SignalR": { bg: "bg-[#512BD4]/20", border: "border-[#512BD4]", text: "text-[#9B7EDE]" },
+  "GraphQL": { bg: "bg-[#E10098]/20", border: "border-[#E10098]", text: "text-[#E10098]" },
+  "RabbitMQ": { bg: "bg-[#FF6600]/20", border: "border-[#FF6600]", text: "text-[#FF6600]" },
+  "Kubernetes": { bg: "bg-[#326CE5]/20", border: "border-[#326CE5]", text: "text-[#326CE5]" },
+};
+
+const TechBadge = ({ tech }: { tech: string }) => {
+  const colors = techColors[tech] || { bg: "bg-muted", border: "border-primary/40", text: "text-primary" };
+  
+  return (
+    <Badge 
+      variant="outline"
+      className={`${colors.bg} ${colors.border} ${colors.text} border font-medium pop-badge backdrop-blur-sm`}
+    >
+      {tech}
+    </Badge>
+  );
+};
 
 interface ProjectsSectionProps {
   data: PortfolioData;
@@ -46,21 +82,55 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
             {data.projects.map((project, index) => {
               const images = project.images || [];
               const currentIdx = currentImageIndex[index] || 0;
+              const hasImages = images.length > 0;
               
               return (
                 <Card 
                   key={index}
-                  className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all duration-300 interactive-card"
+                  className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all duration-300 glow-card"
                 >
-                  {/* Image Gallery */}
-                  {images.length > 0 && (
-                    <div className="relative group">
-                      <div className="aspect-video overflow-hidden bg-muted">
-                        <img
-                          src={images[currentIdx]}
-                          alt={`${project.name} screenshot ${currentIdx + 1}`}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                  <div className="grid md:grid-cols-5 gap-0">
+                    {/* Content Side */}
+                    <div className="md:col-span-3 order-2 md:order-1">
+                      <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                          <CardTitle className="text-xl md:text-2xl text-foreground">
+                            {project.name}
+                          </CardTitle>
+                          {project.link && project.link !== "#" && (
+                            <Button variant="outline" size="sm" asChild className="w-fit pop-element glow-effect">
+                              <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="w-4 h-4 mr-2" />
+                                View Project
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                        {/* Technologies with brand-colored badges */}
+                        <div className="flex flex-wrap gap-2 mt-4">
+                          {project.technologies.map((tech, techIndex) => (
+                            <TechBadge key={techIndex} tech={tech} />
+                          ))}
+                        </div>
+                      </CardHeader>
+                    </div>
+                    
+                    {/* Image Side - Always visible with placeholder */}
+                    <div className="md:col-span-2 order-1 md:order-2 relative group">
+                      <div className="aspect-video md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[200px]">
+                        {hasImages ? (
+                          <img
+                            src={images[currentIdx]}
+                            alt={`${project.name} screenshot ${currentIdx + 1}`}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 border-l border-border/30">
+                            <ImagePlaceholder className="w-16 h-16 text-muted-foreground/40 mb-3" />
+                            <span className="text-sm text-muted-foreground/60 font-medium">Architecture Diagram</span>
+                            <span className="text-xs text-muted-foreground/40 mt-1">Upload via Dashboard</span>
+                          </div>
+                        )}
                       </div>
                       
                       {/* Navigation arrows */}
@@ -94,35 +164,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                         </>
                       )}
                     </div>
-                  )}
-
-                  <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      <CardTitle className="text-xl md:text-2xl text-foreground">
-                        {project.name}
-                      </CardTitle>
-                      {project.link && project.link !== "#" && (
-                        <Button variant="outline" size="sm" asChild className="w-fit pop-element">
-                          <a href={project.link} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-4 h-4 mr-2" />
-                            View Project
-                          </a>
-                        </Button>
-                      )}
-                    </div>
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {project.technologies.map((tech, techIndex) => (
-                        <Badge 
-                          key={techIndex} 
-                          variant="secondary"
-                          className="bg-primary/10 text-primary border-primary/20 pop-badge"
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardHeader>
+                  </div>
                   <CardContent className="p-6">
                     <p className="text-muted-foreground mb-6">
                       {project.description}
