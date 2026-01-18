@@ -25,10 +25,8 @@ const LearningSection = ({ data }: LearningSectionProps) => {
 
                 {/* Content */}
                 <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-                    <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-                      {data.learning.title}
-                    </span>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    {data.learning.title}
                     <Sparkles className="w-6 h-6 text-primary animate-pulse" />
                   </h3>
                   <p className="text-lg text-muted-foreground leading-relaxed">

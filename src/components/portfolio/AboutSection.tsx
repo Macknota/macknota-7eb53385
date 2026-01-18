@@ -13,12 +13,10 @@ const AboutSection = ({ data }: AboutSectionProps) => {
         <div className="max-w-4xl mx-auto">
           {/* Section Title */}
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">
-              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-                {data.about.title}
-              </span>
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
+              {data.about.title}
             </h2>
-            <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto rounded-full" />
+            <div className="w-16 md:w-20 h-1 bg-primary/60 mx-auto rounded-full" />
           </div>
           
           {/* About Text */}
