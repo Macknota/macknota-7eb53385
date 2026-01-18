@@ -23,10 +23,12 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
         <div className="max-w-6xl mx-auto">
           {/* Section Title */}
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
-              Technical Skills
+            <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">
+              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
+                Technical Skills
+              </span>
             </h2>
-            <div className="w-16 md:w-20 h-1 bg-primary mx-auto rounded-full" />
+            <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto rounded-full" />
             <p className="text-muted-foreground mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base px-2">
               A comprehensive toolkit for building robust, scalable backend solutions
             </p>

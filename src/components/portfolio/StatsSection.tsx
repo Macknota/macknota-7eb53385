@@ -36,8 +36,10 @@ const StatsSection = ({ data }: StatsSectionProps) => {
                     <div className="mb-3 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 pop-icon">
                       <IconComponent className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">
-                      {stat.value}
+                    <h3 className="text-2xl md:text-3xl font-bold mb-1 transition-colors duration-300">
+                      <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent group-hover:from-primary group-hover:via-accent group-hover:to-primary">
+                        {stat.value}
+                      </span>
                     </h3>
                     <p className="text-sm text-muted-foreground">{stat.label}</p>
                   </CardContent>

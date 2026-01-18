@@ -69,16 +69,18 @@ const HeroSection = ({ data }: HeroSectionProps) => {
             </div>
           )}
           
-          {/* Name - responsive sizing */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2 md:mb-4 tracking-tight leading-tight">
-            <span className="bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text">
+          {/* Name - responsive sizing with gradient */}
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 tracking-tight leading-tight">
+            <span className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
               {data.hero.name}
             </span>
           </h1>
           
-          {/* Title - responsive sizing */}
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-primary mb-4 md:mb-6 glow-effect inline-block">
-            {data.hero.title}
+          {/* Title - responsive sizing with typewriter effect */}
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-4 md:mb-6 inline-block">
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent glow-effect">
+              {data.hero.title}
+            </span>
           </h2>
           
           {/* Subtitle - smaller on mobile */}
