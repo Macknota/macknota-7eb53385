@@ -2,7 +2,7 @@ import { PortfolioData } from "@/lib/portfolioData";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, Phone, MapPin, ChevronDown, Download } from "lucide-react";
 import { useEffect, useState } from "react";
-import CodeBackground from "./CodeBackground";
+import GeometricBackground from "./GeometricBackground";
 
 interface HeroSectionProps {
   data: PortfolioData;
@@ -31,15 +31,15 @@ const HeroSection = ({ data }: HeroSectionProps) => {
   
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Code Background */}
-      <CodeBackground />
+      {/* Geometric Network Particle Background */}
+      <GeometricBackground />
       
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
       
       {/* Animated decorative elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/5 to-accent/5 rounded-full blur-3xl" />
       
       <div className="container relative z-10 px-4 py-20">
@@ -63,7 +63,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
           
           {/* Status Badge */}
           {data.hero.showStatusBadge && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 font-mono text-sm pop-element">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 font-mono text-sm pop-element border border-primary/20">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               {data.hero.statusBadge || "Available for opportunities"}
             </div>
@@ -94,29 +94,24 @@ const HeroSection = ({ data }: HeroSectionProps) => {
           
           {/* CTA Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            <Button size="lg" className="gap-2 pop-element glow-effect" asChild>
+            <Button size="lg" className="gap-2 pop-element glow-button" asChild>
               <a href={`mailto:${data.contact.email}`}>
                 <Mail className="w-4 h-4" />
                 Contact Me
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="gap-2 pop-element" asChild>
+            <Button size="lg" variant="outline" className="gap-2 pop-element glow-effect border-primary/50 hover:border-primary hover:bg-primary/10" asChild>
+              <a href="#" onClick={(e) => { e.preventDefault(); handleDownloadCV(); }}>
+                <Download className="w-4 h-4" />
+                Download Resume
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="gap-2 pop-element border-accent/50 hover:border-accent hover:bg-accent/10" asChild>
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <Phone className="w-4 h-4" />
                 WhatsApp
               </a>
             </Button>
-            {data.hero.showCvButton && data.hero.cvFile && (
-              <Button 
-                size="lg" 
-                variant="secondary" 
-                className="gap-2 pop-element"
-                onClick={handleDownloadCV}
-              >
-                <Download className="w-4 h-4" />
-                Download CV
-              </Button>
-            )}
           </div>
           
           {/* Social Links */}
