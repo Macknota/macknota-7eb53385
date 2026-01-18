@@ -55,9 +55,9 @@ const Navbar = ({ data }: NavbarProps) => {
       }`}
     >
       <div className="container px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
-          <Link to="/" className="text-lg font-bold text-foreground">
+          <Link to="/" className="text-base md:text-lg font-bold text-foreground">
             <span className="text-primary">&lt;</span>
             {logoText}
             <span className="text-primary">/&gt;</span>
