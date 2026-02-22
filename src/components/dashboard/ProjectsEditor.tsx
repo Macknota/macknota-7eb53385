@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { PortfolioData } from "@/lib/portfolioData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, X, ChevronDown, ChevronUp, Image, Upload } from "lucide-react";
+import { Plus, Trash2, X, ChevronDown, ChevronUp, Image, Upload, Crop } from "lucide-react";
+import ImageCropper from "./ImageCropper";
 
 interface ProjectsEditorProps {
   data: PortfolioData;
@@ -17,6 +18,9 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
   const [expandedProject, setExpandedProject] = useState<number | null>(0);
   const [newTech, setNewTech] = useState<Record<number, string>>({});
   const [newFeature, setNewFeature] = useState<Record<number, string>>({});
+  const [cropperOpen, setCropperOpen] = useState(false);
+  const [cropperImage, setCropperImage] = useState("");
+  const [cropTarget, setCropTarget] = useState<{ projectIndex: number; imageIndex: number | null }>({ projectIndex: 0, imageIndex: null });
 
   const updateProject = (index: number, field: keyof PortfolioData["projects"][0], value: string | string[]) => {
     const newProjects = [...data.projects];
@@ -78,11 +82,32 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64 = reader.result as string;
-        const currentImages = data.projects[projectIndex].images || [];
-        updateProject(projectIndex, "images", [...currentImages, base64]);
+        setCropperImage(base64);
+        setCropTarget({ projectIndex, imageIndex: null });
+        setCropperOpen(true);
       };
       reader.readAsDataURL(file);
     });
+  };
+
+  const openCropperForExisting = (projectIndex: number, imageIndex: number) => {
+    const img = data.projects[projectIndex].images?.[imageIndex];
+    if (img) {
+      setCropperImage(img);
+      setCropTarget({ projectIndex, imageIndex });
+      setCropperOpen(true);
+    }
+  };
+
+  const handleCropComplete = (croppedImage: string) => {
+    const { projectIndex, imageIndex } = cropTarget;
+    const currentImages = [...(data.projects[projectIndex].images || [])];
+    if (imageIndex !== null) {
+      currentImages[imageIndex] = croppedImage;
+    } else {
+      currentImages.push(croppedImage);
+    }
+    updateProject(projectIndex, "images", currentImages);
   };
 
   const removeImage = (projectIndex: number, imageIndex: number) => {
@@ -173,12 +198,22 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
                   {(project.images || []).map((img, imgIndex) => (
                     <div key={imgIndex} className="relative group aspect-video rounded-lg overflow-hidden border border-border">
                       <img src={img} alt={`Project ${imgIndex + 1}`} className="w-full h-full object-cover" />
-                      <button
-                        onClick={() => removeImage(index, imgIndex)}
-                        className="absolute top-1 right-1 p-1 bg-destructive/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <X className="w-3 h-3 text-destructive-foreground" />
-                      </button>
+                      <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => openCropperForExisting(index, imgIndex)}
+                          className="p-1.5 bg-primary rounded-full shadow-lg"
+                          title="قص وتعديل"
+                        >
+                          <Crop className="w-3 h-3 text-primary-foreground" />
+                        </button>
+                        <button
+                          onClick={() => removeImage(index, imgIndex)}
+                          className="p-1.5 bg-destructive/80 rounded-full shadow-lg"
+                          title="حذف"
+                        >
+                          <X className="w-3 h-3 text-destructive-foreground" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <label className="aspect-video rounded-lg border-2 border-dashed border-border hover:border-primary/50 flex flex-col items-center justify-center cursor-pointer transition-colors bg-muted/20 hover:bg-muted/40">
@@ -288,6 +323,14 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
           )}
         </Card>
       ))}
+
+      <ImageCropper
+        open={cropperOpen}
+        imageSrc={cropperImage}
+        aspect={16 / 9}
+        onClose={() => setCropperOpen(false)}
+        onCropComplete={handleCropComplete}
+      />
     </div>
   );
 };
