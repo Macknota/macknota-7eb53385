@@ -104,12 +104,12 @@ export const defaultPortfolioData: PortfolioData = {
     linkedin: "https://linkedin.com/in/adelmagdy",
   },
   skills: {
-    languages: ["C#", "TypeScript", "SQL", "HTML5", "CSS3"],
-    frameworks: [".NET 8", "ASP.NET Core Web API", "Entity Framework Core", "LINQ", "ADO.NET", "SignalR", "Angular (v18)", "RxJS", "Bootstrap"],
+    languages: ["C#", "TypeScript", "JavaScript", "SQL", "HTML5", "CSS3", "SCSS"],
+    frameworks: [".NET 8", "ASP.NET Core Web API", "Entity Framework Core", "LINQ", "ADO.NET", "SignalR", "Angular (v18)", "Angular Material", "Angular CDK", "RxJS", "NgRx", "Bootstrap", "Tailwind CSS"],
     databases: ["Microsoft SQL Server", "Redis"],
-    architecture: ["Clean Architecture", "Onion Architecture", "Repository Pattern", "Unit of Work", "CQRS", "SOLID Principles", "MVC"],
-    tools: ["Visual Studio", "VS Code", "Git", "GitHub", "Postman", "Docker", "SSMS"],
-    concepts: ["OOP", "Dependency Injection", "Middleware", "RESTful API Design", "Async/Await", "Responsive Design", "SPA"],
+    architecture: ["Clean Architecture", "Onion Architecture", "Repository Pattern", "Unit of Work", "CQRS", "SOLID Principles", "MVC", "Component-Based Architecture", "Lazy Loading", "State Management"],
+    tools: ["Visual Studio", "VS Code", "Git", "GitHub", "Postman", "Docker", "SSMS", "Angular CLI", "npm", "Chrome DevTools"],
+    concepts: ["OOP", "Dependency Injection", "Middleware", "RESTful API Design", "Async/Await", "Responsive Design", "SPA", "Reactive Programming", "Angular Routing & Guards", "Angular Forms (Reactive & Template)", "Interceptors & Pipes", "Angular Lifecycle Hooks", "Module Federation"],
   },
   education: {
     degree: "Bachelor of Science in Computer Science",
