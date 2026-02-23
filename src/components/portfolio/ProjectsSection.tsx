@@ -117,12 +117,12 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     
                     {/* Image Side - Always visible with placeholder */}
                     <div className="md:col-span-2 order-1 md:order-2 relative group">
-                      <div className="flex items-center justify-center bg-muted/20 p-2 md:p-4 min-h-[120px]">
+                      <div className="flex items-center justify-center bg-muted/20 p-3 md:p-5 min-h-[120px] rounded-lg">
                         {hasImages ? (
                           <img
                             src={images[currentIdx]}
                             alt={`${project.name} screenshot ${currentIdx + 1}`}
-                            className="max-w-full max-h-[350px] w-auto h-auto rounded-md transition-transform duration-500 group-hover:scale-105"
+                            className="max-w-full max-h-[350px] w-auto h-auto rounded-lg border border-border/40 shadow-lg shadow-primary/5 ring-1 ring-border/20 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10"
                           />
                         ) : (
                           <div className="w-full min-h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 rounded-md py-4">
