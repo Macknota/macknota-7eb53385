@@ -196,8 +196,8 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
                 </Label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {(project.images || []).map((img, imgIndex) => (
-                    <div key={imgIndex} className="relative group aspect-video rounded-lg overflow-hidden border border-border">
-                      <img src={img} alt={`Project ${imgIndex + 1}`} className="w-full h-full object-cover" />
+                    <div key={imgIndex} className="relative group rounded-lg overflow-hidden border border-border bg-muted/20 flex items-center justify-center min-h-[80px]">
+                      <img src={img} alt={`Project ${imgIndex + 1}`} className="max-w-full max-h-[120px] w-auto h-auto object-contain" />
                       <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                         <button
                           onClick={() => openCropperForExisting(index, imgIndex)}
