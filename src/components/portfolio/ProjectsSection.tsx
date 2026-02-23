@@ -117,12 +117,12 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     
                     {/* Image Side - Always visible with placeholder */}
                     <div className="md:col-span-2 order-1 md:order-2 relative group">
-                      <div className="aspect-video md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[140px] md:min-h-[200px]">
+                      <div className="aspect-video md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[140px] md:min-h-[200px] flex items-center justify-center">
                         {hasImages ? (
                           <img
                             src={images[currentIdx]}
                             alt={`${project.name} screenshot ${currentIdx + 1}`}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
                           <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 border-l border-border/30 py-4 md:py-0">
