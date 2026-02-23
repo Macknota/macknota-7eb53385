@@ -62,6 +62,7 @@ export interface PortfolioData {
     challenge?: string;
     solution?: string;
     result?: string;
+    inProgress?: boolean;
   }[];
   languages: {
     name: string;
