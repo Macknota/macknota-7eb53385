@@ -71,6 +71,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
               const images = project.images || [];
               const hasImages = images.length > 0;
               const activeIdx = selectedImage[index] || 0;
+              const hasDetails = project.challenge || project.solution || project.result;
               
               return (
                 <Card 
@@ -105,85 +106,87 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     </div>
                   </div>
 
-                  {/* Images Gallery */}
-                  <div className="border-b border-border/30 bg-muted/10">
-                    {hasImages ? (
-                      <div className="p-4 md:p-6 space-y-3">
-                        {/* Main selected image */}
-                        <div className="flex items-center justify-center bg-muted/20 rounded-lg p-3 md:p-4 min-h-[150px] md:min-h-[280px]">
-                          <img
-                            src={images[activeIdx]}
-                            alt={`${project.name} screenshot ${activeIdx + 1}`}
-                            className="max-w-full max-h-[250px] md:max-h-[380px] w-auto h-auto object-contain rounded-lg border border-border/40 shadow-lg shadow-primary/5 ring-1 ring-border/20 transition-all duration-500"
-                          />
+                  {/* Middle: Details (left) + Image (right) */}
+                  <div className="p-4 md:p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6">
+                      {/* Left: Challenge / Solution / Result stacked */}
+                      {hasDetails && (
+                        <div className="md:col-span-3 order-2 md:order-1 flex flex-col gap-3">
+                          {project.challenge && (
+                            <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <Target className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0" />
+                                <h5 className="font-semibold text-foreground text-sm md:text-base">Challenge</h5>
+                              </div>
+                              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{project.challenge}</p>
+                            </div>
+                          )}
+                          {project.solution && (
+                            <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <Lightbulb className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0" />
+                                <h5 className="font-semibold text-foreground text-sm md:text-base">Solution</h5>
+                              </div>
+                              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{project.solution}</p>
+                            </div>
+                          )}
+                          {project.result && (
+                            <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <Trophy className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0" />
+                                <h5 className="font-semibold text-foreground text-sm md:text-base">Result</h5>
+                              </div>
+                              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{project.result}</p>
+                            </div>
+                          )}
                         </div>
-                        {/* Thumbnails row */}
-                        {images.length > 1 && (
-                          <div className="flex gap-2 md:gap-3 overflow-x-auto pb-1 scrollbar-thin">
-                            {images.map((img, imgIdx) => (
-                              <button
-                                key={imgIdx}
-                                onClick={() => setSelectedImage(prev => ({ ...prev, [index]: imgIdx }))}
-                                className={`shrink-0 rounded-md overflow-hidden border-2 transition-all duration-300 ${
-                                  imgIdx === activeIdx
-                                    ? 'border-primary shadow-md shadow-primary/20 scale-105'
-                                    : 'border-border/30 opacity-60 hover:opacity-100 hover:border-border'
-                                }`}
-                              >
-                                <img
-                                  src={img}
-                                  alt={`${project.name} thumb ${imgIdx + 1}`}
-                                  className="w-16 h-12 md:w-24 md:h-16 object-contain bg-muted/20 p-1"
-                                />
-                              </button>
-                            ))}
+                      )}
+
+                      {/* Right: Image (smaller) */}
+                      <div className={`${hasDetails ? 'md:col-span-2' : 'md:col-span-5'} order-1 md:order-2`}>
+                        {hasImages ? (
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-center bg-muted/20 rounded-lg p-2 md:p-3">
+                              <img
+                                src={images[activeIdx]}
+                                alt={`${project.name} screenshot ${activeIdx + 1}`}
+                                className="max-w-full max-h-[160px] md:max-h-[220px] w-auto h-auto object-contain rounded-md border border-border/40 shadow-md shadow-primary/5 ring-1 ring-border/20 transition-all duration-500"
+                              />
+                            </div>
+                            {images.length > 1 && (
+                              <div className="flex gap-1.5 overflow-x-auto pb-1">
+                                {images.map((img, imgIdx) => (
+                                  <button
+                                    key={imgIdx}
+                                    onClick={() => setSelectedImage(prev => ({ ...prev, [index]: imgIdx }))}
+                                    className={`shrink-0 rounded overflow-hidden border-2 transition-all duration-300 ${
+                                      imgIdx === activeIdx
+                                        ? 'border-primary shadow-sm shadow-primary/20'
+                                        : 'border-border/30 opacity-60 hover:opacity-100 hover:border-border'
+                                    }`}
+                                  >
+                                    <img
+                                      src={img}
+                                      alt={`${project.name} thumb ${imgIdx + 1}`}
+                                      className="w-12 h-9 md:w-16 md:h-11 object-contain bg-muted/20 p-0.5"
+                                    />
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center bg-muted/10 rounded-lg min-h-[120px] md:min-h-full border border-dashed border-border/30">
+                            <ImagePlaceholder className="w-8 h-8 text-muted-foreground/25 mb-1.5" />
+                            <span className="text-[10px] text-muted-foreground/40">No images yet</span>
                           </div>
                         )}
                       </div>
-                    ) : (
-                      <div className="p-6 md:p-8 flex flex-col items-center justify-center min-h-[120px]">
-                        <ImagePlaceholder className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground/30 mb-2" />
-                        <span className="text-xs text-muted-foreground/50">No images yet</span>
-                      </div>
-                    )}
+                    </div>
                   </div>
 
-                  {/* Content */}
-                  <CardContent className="p-4 md:p-6 space-y-4 md:space-y-6">
-                    {/* Challenge / Solution / Result */}
-                    {(project.challenge || project.solution || project.result) && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-                        {project.challenge && (
-                          <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
-                            <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-                              <Target className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-                              <h5 className="font-semibold text-foreground text-sm md:text-base">Challenge</h5>
-                            </div>
-                            <p className="text-xs md:text-sm text-muted-foreground">{project.challenge}</p>
-                          </div>
-                        )}
-                        {project.solution && (
-                          <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
-                            <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-                              <Lightbulb className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-                              <h5 className="font-semibold text-foreground text-sm md:text-base">Solution</h5>
-                            </div>
-                            <p className="text-xs md:text-sm text-muted-foreground">{project.solution}</p>
-                          </div>
-                        )}
-                        {project.result && (
-                          <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
-                            <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-                              <Trophy className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-                              <h5 className="font-semibold text-foreground text-sm md:text-base">Result</h5>
-                            </div>
-                            <p className="text-xs md:text-sm text-muted-foreground">{project.result}</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    {/* Features */}
+                  {/* Features */}
+                  <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
                     <div className="space-y-2 md:space-y-3">
                       <h4 className="font-semibold text-foreground text-sm md:text-base">Key Features:</h4>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-2">
