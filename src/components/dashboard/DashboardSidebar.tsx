@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 import { 
   User, 
   Code2, 
@@ -9,7 +10,8 @@ import {
   GraduationCap,
   Home,
   RotateCcw,
-  Palette
+  Palette,
+  LogOut
 } from "lucide-react";
 
 const menuItems = [
@@ -29,6 +31,8 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar = ({ activeSection, onSectionChange, onReset }: DashboardSidebarProps) => {
+  const { signOut } = useAuth();
+
   return (
     <div className="w-64 border-r border-border bg-card h-screen sticky top-0 flex flex-col">
       {/* Header */}
@@ -78,6 +82,14 @@ const DashboardSidebar = ({ activeSection, onSectionChange, onReset }: Dashboard
         >
           <RotateCcw className="w-4 h-4" />
           Reset to Default
+        </Button>
+        <Button 
+          variant="ghost" 
+          className="w-full gap-2"
+          onClick={signOut}
+        >
+          <LogOut className="w-4 h-4" />
+          تسجيل الخروج
         </Button>
       </div>
     </div>
