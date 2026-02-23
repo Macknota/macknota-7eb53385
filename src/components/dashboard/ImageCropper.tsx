@@ -96,6 +96,9 @@ const ImageCropper = ({
             rotation={rotation}
             aspect={aspect}
             cropShape={cropShape}
+            minZoom={0.1}
+            maxZoom={5}
+            objectFit="contain"
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onRotationChange={setRotation}
@@ -110,8 +113,8 @@ const ImageCropper = ({
             </Label>
             <Slider
               value={[zoom]}
-              min={1}
-              max={3}
+              min={0.1}
+              max={5}
               step={0.05}
               onValueChange={(v) => setZoom(v[0])}
             />
