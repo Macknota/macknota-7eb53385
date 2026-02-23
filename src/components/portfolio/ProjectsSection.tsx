@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { PortfolioData } from "@/lib/portfolioData";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Check, ChevronLeft, ChevronRight, Target, Lightbulb, Trophy, Image as ImagePlaceholder } from "lucide-react";
+import { ExternalLink, Check, Target, Lightbulb, Trophy, Image as ImagePlaceholder } from "lucide-react";
 
 // Tech brand colors mapping
 const techColors: Record<string, { bg: string; border: string; text: string }> = {
@@ -26,6 +26,8 @@ const techColors: Record<string, { bg: string; border: string; text: string }> =
   "GraphQL": { bg: "bg-[#E10098]/20", border: "border-[#E10098]", text: "text-[#E10098]" },
   "RabbitMQ": { bg: "bg-[#FF6600]/20", border: "border-[#FF6600]", text: "text-[#FF6600]" },
   "Kubernetes": { bg: "bg-[#326CE5]/20", border: "border-[#326CE5]", text: "text-[#326CE5]" },
+  "Angular 18": { bg: "bg-[#DD0031]/20", border: "border-[#DD0031]", text: "text-[#DD0031]" },
+  "Bootstrap": { bg: "bg-[#7952B3]/20", border: "border-[#7952B3]", text: "text-[#7952B3]" },
 };
 
 const TechBadge = ({ tech }: { tech: string }) => {
@@ -46,21 +48,7 @@ interface ProjectsSectionProps {
 }
 
 const ProjectsSection = ({ data }: ProjectsSectionProps) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState<Record<number, number>>({});
-
-  const nextImage = (projectIndex: number, totalImages: number) => {
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [projectIndex]: ((prev[projectIndex] || 0) + 1) % totalImages
-    }));
-  };
-
-  const prevImage = (projectIndex: number, totalImages: number) => {
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [projectIndex]: ((prev[projectIndex] || 0) - 1 + totalImages) % totalImages
-    }));
-  };
+  const [selectedImage, setSelectedImage] = useState<Record<number, number>>({});
 
   return (
     <section id="projects" className="py-12 md:py-20 bg-muted/30">
@@ -78,101 +66,93 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
           </div>
           
           {/* Projects */}
-          <div className="space-y-6 md:space-y-8">
+          <div className="space-y-8 md:space-y-10">
             {data.projects.map((project, index) => {
               const images = project.images || [];
-              const currentIdx = currentImageIndex[index] || 0;
               const hasImages = images.length > 0;
+              const activeIdx = selectedImage[index] || 0;
               
               return (
                 <Card 
                   key={index}
-                  className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all duration-300 glow-card"
+                  className="border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all duration-300 glow-card"
                 >
-                  <div className="grid md:grid-cols-5 gap-0">
-                    {/* Content Side */}
-                    <div className="md:col-span-3 order-2 md:order-1">
-                      <CardHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 to-transparent p-4 md:p-6">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
-                          <CardTitle className="text-lg md:text-2xl text-foreground">
-                            {project.name}
-                          </CardTitle>
-                          {project.link && project.link !== "#" && (
-                            <Button variant="outline" size="sm" asChild className="w-fit pop-element glow-effect text-xs md:text-sm">
-                              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" />
-                                View Project
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                        {/* Technologies with brand-colored badges */}
-                        <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-4">
-                          {project.technologies.map((tech, techIndex) => (
-                            <TechBadge key={techIndex} tech={tech} />
-                          ))}
-                        </div>
-                      </CardHeader>
+                  {/* Project Header - Always on top */}
+                  <div className="border-b border-border/40 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent p-4 md:p-6">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                      <div className="space-y-2">
+                        <h3 className="text-lg md:text-2xl font-bold text-foreground">
+                          {project.name}
+                        </h3>
+                        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                          {project.description}
+                        </p>
+                      </div>
+                      {project.link && project.link !== "#" && (
+                        <Button variant="outline" size="sm" asChild className="w-fit pop-element glow-effect text-xs md:text-sm shrink-0">
+                          <a href={project.link} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5" />
+                            View Project
+                          </a>
+                        </Button>
+                      )}
                     </div>
-                    
-                    {/* Image Side - Always visible with placeholder */}
-                    <div className="md:col-span-2 order-1 md:order-2 relative group">
-                      <div className="flex items-center justify-center bg-muted/20 p-3 md:p-5 min-h-[120px] rounded-lg">
-                        {hasImages ? (
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3">
+                      {project.technologies.map((tech, techIndex) => (
+                        <TechBadge key={techIndex} tech={tech} />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Images Gallery */}
+                  <div className="border-b border-border/30 bg-muted/10">
+                    {hasImages ? (
+                      <div className="p-4 md:p-6 space-y-3">
+                        {/* Main selected image */}
+                        <div className="flex items-center justify-center bg-muted/20 rounded-lg p-3 md:p-4 min-h-[150px] md:min-h-[280px]">
                           <img
-                            src={images[currentIdx]}
-                            alt={`${project.name} screenshot ${currentIdx + 1}`}
-                            className="max-w-full max-h-[350px] w-auto h-auto rounded-lg border border-border/40 shadow-lg shadow-primary/5 ring-1 ring-border/20 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10"
+                            src={images[activeIdx]}
+                            alt={`${project.name} screenshot ${activeIdx + 1}`}
+                            className="max-w-full max-h-[250px] md:max-h-[380px] w-auto h-auto object-contain rounded-lg border border-border/40 shadow-lg shadow-primary/5 ring-1 ring-border/20 transition-all duration-500"
                           />
-                        ) : (
-                          <div className="w-full min-h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 rounded-md py-4">
-                            <ImagePlaceholder className="w-10 h-10 md:w-16 md:h-16 text-muted-foreground/40 mb-2 md:mb-3" />
-                            <span className="text-xs md:text-sm text-muted-foreground/60 font-medium">Architecture Diagram</span>
-                            <span className="text-[10px] md:text-xs text-muted-foreground/40 mt-1">Upload via Dashboard</span>
+                        </div>
+                        {/* Thumbnails row */}
+                        {images.length > 1 && (
+                          <div className="flex gap-2 md:gap-3 overflow-x-auto pb-1 scrollbar-thin">
+                            {images.map((img, imgIdx) => (
+                              <button
+                                key={imgIdx}
+                                onClick={() => setSelectedImage(prev => ({ ...prev, [index]: imgIdx }))}
+                                className={`shrink-0 rounded-md overflow-hidden border-2 transition-all duration-300 ${
+                                  imgIdx === activeIdx
+                                    ? 'border-primary shadow-md shadow-primary/20 scale-105'
+                                    : 'border-border/30 opacity-60 hover:opacity-100 hover:border-border'
+                                }`}
+                              >
+                                <img
+                                  src={img}
+                                  alt={`${project.name} thumb ${imgIdx + 1}`}
+                                  className="w-16 h-12 md:w-24 md:h-16 object-contain bg-muted/20 p-1"
+                                />
+                              </button>
+                            ))}
                           </div>
                         )}
                       </div>
-                      
-                      {/* Navigation arrows */}
-                      {images.length > 1 && (
-                        <>
-                          <button
-                            onClick={() => prevImage(index, images.length)}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-background/80 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background pop-element"
-                          >
-                            <ChevronLeft className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => nextImage(index, images.length)}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-background/80 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background pop-element"
-                          >
-                            <ChevronRight className="w-5 h-5" />
-                          </button>
-                          
-                          {/* Dots indicator */}
-                          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-                            {images.map((_, imgIdx) => (
-                              <button
-                                key={imgIdx}
-                                onClick={() => setCurrentImageIndex(prev => ({ ...prev, [index]: imgIdx }))}
-                                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                  imgIdx === currentIdx ? 'bg-primary w-6' : 'bg-background/60 hover:bg-background'
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
+                    ) : (
+                      <div className="p-6 md:p-8 flex flex-col items-center justify-center min-h-[120px]">
+                        <ImagePlaceholder className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground/30 mb-2" />
+                        <span className="text-xs text-muted-foreground/50">No images yet</span>
+                      </div>
+                    )}
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <p className="text-muted-foreground mb-4 md:mb-6 text-sm md:text-base leading-relaxed">
-                      {project.description}
-                    </p>
 
+                  {/* Content */}
+                  <CardContent className="p-4 md:p-6 space-y-4 md:space-y-6">
                     {/* Challenge / Solution / Result */}
                     {(project.challenge || project.solution || project.result) && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                         {project.challenge && (
                           <div className="p-3 md:p-4 rounded-lg bg-muted/50 border border-border/50 interactive-card">
                             <div className="flex items-center gap-2 mb-1.5 md:mb-2">
@@ -206,7 +186,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     {/* Features */}
                     <div className="space-y-2 md:space-y-3">
                       <h4 className="font-semibold text-foreground text-sm md:text-base">Key Features:</h4>
-                      <ul className="space-y-1.5 md:space-y-2">
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-2">
                         {project.features.map((feature, featureIndex) => (
                           <li key={featureIndex} className="flex items-start gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground group/feature">
                             <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-0.5 flex-shrink-0 transition-transform duration-200 group-hover/feature:scale-125" />
