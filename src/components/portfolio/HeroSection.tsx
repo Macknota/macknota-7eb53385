@@ -42,11 +42,11 @@ const HeroSection = ({ data }: HeroSectionProps) => {
       <div className="absolute bottom-20 right-5 md:right-10 w-48 md:w-96 h-48 md:h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-gradient-to-r from-primary/5 to-accent/5 rounded-full blur-3xl" />
       
-      <div className="container relative z-10 px-5 md:px-4 py-16 md:py-20">
+      <div className="container relative z-10 px-5 md:px-4 py-20 md:py-20">
         <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {/* Profile Image - smaller on mobile */}
           {data.hero.profileImage && (
-            <div className="mb-6 md:mb-8 group">
+            <div className="mb-6 md:mb-8 group relative z-20">
               <div className="relative inline-block">
                 {/* Animated ring */}
                 <div className="absolute inset-[-6px] md:inset-[-8px] bg-gradient-to-r from-primary via-accent to-primary rounded-full animate-spin" style={{ animationDuration: "8s" }} />
@@ -55,7 +55,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
                 <img
                   src={data.hero.profileImage}
                   alt={data.hero.name}
-                  className="relative w-28 h-28 md:w-40 md:h-40 rounded-full mx-auto border-4 border-background shadow-2xl object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="relative w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-background shadow-2xl object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </div>
