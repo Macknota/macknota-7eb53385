@@ -117,15 +117,15 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     
                     {/* Image Side - Always visible with placeholder */}
                     <div className="md:col-span-2 order-1 md:order-2 relative group">
-                      <div className="overflow-hidden bg-muted/30 flex items-center justify-center">
+                      <div className="flex items-center justify-center bg-muted/20 p-2 md:p-4 min-h-[120px]">
                         {hasImages ? (
                           <img
                             src={images[currentIdx]}
                             alt={`${project.name} screenshot ${currentIdx + 1}`}
-                            className="max-w-full max-h-[400px] object-contain transition-transform duration-500 group-hover:scale-105"
+                            className="max-w-full max-h-[350px] w-auto h-auto rounded-md transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
-                          <div className="w-full min-h-[200px] flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 border-l border-border/30 py-4 md:py-0">
+                          <div className="w-full min-h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 rounded-md py-4">
                             <ImagePlaceholder className="w-10 h-10 md:w-16 md:h-16 text-muted-foreground/40 mb-2 md:mb-3" />
                             <span className="text-xs md:text-sm text-muted-foreground/60 font-medium">Architecture Diagram</span>
                             <span className="text-[10px] md:text-xs text-muted-foreground/40 mt-1">Upload via Dashboard</span>

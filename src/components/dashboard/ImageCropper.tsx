@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import Cropper, { Area } from "react-easy-crop";
+import { useState, useCallback, useRef } from "react";
+import Cropper, { Area, Point } from "react-easy-crop";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -15,9 +15,15 @@ interface ImageCropperProps {
   onCropComplete: (croppedImage: string) => void;
 }
 
+/**
+ * Creates a cropped image that correctly handles zoom-out scenarios.
+ * When the user zooms out, the crop area can be larger than the image,
+ * so we need to draw the image centered on a transparent/white canvas.
+ */
 const createCroppedImage = async (
   imageSrc: string,
-  pixelCrop: Area
+  pixelCrop: Area,
+  rotation: number = 0
 ): Promise<string> => {
   const image = new Image();
   image.crossOrigin = "anonymous";
@@ -32,19 +38,30 @@ const createCroppedImage = async (
   canvas.height = pixelCrop.height;
   const ctx = canvas.getContext("2d")!;
 
-  ctx.drawImage(
-    image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height
-  );
+  // Fill with transparent background
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  return canvas.toDataURL("image/jpeg", 0.9);
+  // Calculate source and destination coordinates
+  // pixelCrop.x/y can be negative when zoomed out
+  const sx = Math.max(0, pixelCrop.x);
+  const sy = Math.max(0, pixelCrop.y);
+  const sx2 = Math.min(image.naturalWidth, pixelCrop.x + pixelCrop.width);
+  const sy2 = Math.min(image.naturalHeight, pixelCrop.y + pixelCrop.height);
+
+  const sw = sx2 - sx;
+  const sh = sy2 - sy;
+
+  if (sw <= 0 || sh <= 0) {
+    // Image is completely outside the crop area
+    return canvas.toDataURL("image/png");
+  }
+
+  const dx = sx - pixelCrop.x;
+  const dy = sy - pixelCrop.y;
+
+  ctx.drawImage(image, sx, sy, sw, sh, dx, dy, sw, sh);
+
+  return canvas.toDataURL("image/png");
 };
 
 const ImageCropper = ({
@@ -55,7 +72,7 @@ const ImageCropper = ({
   onClose,
   onCropComplete: onCropDone,
 }: ImageCropperProps) => {
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
@@ -67,7 +84,7 @@ const ImageCropper = ({
   const handleSave = async () => {
     if (!croppedAreaPixels) return;
     try {
-      const croppedImage = await createCroppedImage(imageSrc, croppedAreaPixels);
+      const croppedImage = await createCroppedImage(imageSrc, croppedAreaPixels, rotation);
       onCropDone(croppedImage);
       onClose();
     } catch (e) {
@@ -109,6 +126,7 @@ const ImageCropper = ({
             onZoomChange={setZoom}
             onRotationChange={setRotation}
             onCropComplete={onCropComplete}
+            showGrid={true}
           />
         </div>
 
@@ -121,7 +139,7 @@ const ImageCropper = ({
               value={[zoom]}
               min={0.1}
               max={5}
-              step={0.05}
+              step={0.01}
               onValueChange={(v) => setZoom(v[0])}
             />
           </div>
@@ -140,7 +158,7 @@ const ImageCropper = ({
           </div>
         </div>
 
-        <DialogFooter className="gap-2">
+        <DialogFooter className="gap-2 flex-wrap">
           <Button variant="outline" onClick={handleAutoFit} className="gap-1.5">
             <Maximize className="w-4 h-4" />
             Auto-fit
