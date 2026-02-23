@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { Plus, Trash2, X, ChevronDown, ChevronUp, Image, Upload, Crop } from "lucide-react";
 import ImageCropper from "./ImageCropper";
 
@@ -22,7 +23,7 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
   const [cropperImage, setCropperImage] = useState("");
   const [cropTarget, setCropTarget] = useState<{ projectIndex: number; imageIndex: number | null }>({ projectIndex: 0, imageIndex: null });
 
-  const updateProject = (index: number, field: keyof PortfolioData["projects"][0], value: string | string[]) => {
+  const updateProject = (index: number, field: keyof PortfolioData["projects"][0], value: string | string[] | boolean) => {
     const newProjects = [...data.projects];
     newProjects[index] = { ...newProjects[index], [field]: value };
     onUpdate({ ...data, projects: newProjects });
@@ -176,6 +177,18 @@ const ProjectsEditor = ({ data, onUpdate }: ProjectsEditorProps) => {
                     placeholder="https://github.com/..."
                   />
                 </div>
+              </div>
+
+              {/* In Progress Toggle */}
+              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border/50">
+                <div className="space-y-0.5">
+                  <Label className="text-sm font-medium">Work in Progress</Label>
+                  <p className="text-xs text-muted-foreground">Mark this project as currently in development</p>
+                </div>
+                <Switch
+                  checked={project.inProgress || false}
+                  onCheckedChange={(checked) => updateProject(index, "inProgress", checked)}
+                />
               </div>
 
               <div className="space-y-2">

@@ -3,7 +3,7 @@ import { PortfolioData } from "@/lib/portfolioData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Check, Target, Lightbulb, Trophy, Image as ImagePlaceholder } from "lucide-react";
+import { ExternalLink, Check, Target, Lightbulb, Trophy, Image as ImagePlaceholder, Construction } from "lucide-react";
 
 // Tech brand colors mapping
 const techColors: Record<string, { bg: string; border: string; text: string }> = {
@@ -82,9 +82,17 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                   <div className="border-b border-border/40 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent p-4 md:p-6">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                       <div className="space-y-2">
-                        <h3 className="text-lg md:text-2xl font-bold text-foreground">
-                          {project.name}
-                        </h3>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-lg md:text-2xl font-bold text-foreground">
+                            {project.name}
+                          </h3>
+                          {project.inProgress && (
+                            <Badge className="bg-amber-500/15 text-amber-500 border-amber-500/30 border gap-1 text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 animate-pulse">
+                              <Construction className="w-3 h-3" />
+                              In Progress
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-xs md:text-sm text-muted-foreground leading-relaxed max-w-2xl">
                           {project.description}
                         </p>
