@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { RotateCw, ZoomIn } from "lucide-react";
+import { RotateCw, ZoomIn, Maximize } from "lucide-react";
 
 interface ImageCropperProps {
   open: boolean;
@@ -81,6 +81,12 @@ const ImageCropper = ({
     setRotation(0);
   };
 
+  const handleAutoFit = () => {
+    setCrop({ x: 0, y: 0 });
+    setZoom(0.1);
+    setRotation(0);
+  };
+
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="sm:max-w-lg">
@@ -135,6 +141,10 @@ const ImageCropper = ({
         </div>
 
         <DialogFooter className="gap-2">
+          <Button variant="outline" onClick={handleAutoFit} className="gap-1.5">
+            <Maximize className="w-4 h-4" />
+            Auto-fit
+          </Button>
           <Button variant="outline" onClick={handleReset}>
             إعادة ضبط
           </Button>
