@@ -117,7 +117,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     
                     {/* Image Side - Always visible with placeholder */}
                     <div className="md:col-span-2 order-1 md:order-2 relative group">
-                      <div className="aspect-[4/3] md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[200px] md:min-h-[350px]">
+                      <div className="aspect-video md:aspect-auto md:h-full overflow-hidden bg-muted/30 min-h-[140px] md:min-h-[200px]">
                         {hasImages ? (
                           <img
                             src={images[currentIdx]}
