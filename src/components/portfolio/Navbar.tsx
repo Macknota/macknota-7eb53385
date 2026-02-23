@@ -49,8 +49,8 @@ const Navbar = ({ data }: NavbarProps) => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm"
+        isScrolled || isMobileMenuOpen
+          ? "bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -122,7 +122,7 @@ const Navbar = ({ data }: NavbarProps) => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border/50">
+          <div className="md:hidden py-4 border-t border-border/50 bg-background/95 backdrop-blur-lg">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <button
