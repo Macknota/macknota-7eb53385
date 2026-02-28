@@ -17,23 +17,24 @@ export interface ThemeSettings {
 
 const THEME_STORAGE_KEY = "portfolio_theme_settings";
 
-// Deep Dark Theme with Electric Purple/Neon Blue
+// Orange Sunset Theme
 const defaultLightTheme: ThemeColors = {
-  primary: "263 90% 60%",        // Electric Purple
-  accent: "199 100% 55%",        // Neon Blue
-  background: "222 47% 8%",      // #0B0F19 dark blue-grey
-  foreground: "0 0% 100%",       // White text
-  cardBackground: "222 40% 12%", // Slightly lighter card
-  mutedForeground: "220 15% 65%", // Muted grey
+  primary: "25 95% 55%",          // Orange
+  accent: "35 100% 60%",          // Golden Orange
+  background: "0 0% 100%",        // White
+  foreground: "30 10% 10%",       // Dark text
+  cardBackground: "30 30% 97%",   // Warm light card
+  mutedForeground: "30 10% 45%",  // Muted warm grey
 };
 
+// Orange Night Theme
 const defaultDarkTheme: ThemeColors = {
-  primary: "263 90% 60%",        // Electric Purple
-  accent: "199 100% 55%",        // Neon Blue
-  background: "222 47% 8%",      // #0B0F19 dark blue-grey
-  foreground: "0 0% 100%",       // White text
-  cardBackground: "222 40% 12%", // Slightly lighter card
-  mutedForeground: "220 15% 65%", // Muted grey
+  primary: "25 95% 60%",          // Orange
+  accent: "35 100% 65%",          // Golden Orange
+  background: "20 20% 6%",        // Dark warm background
+  foreground: "30 20% 98%",       // Light text
+  cardBackground: "20 20% 10%",   // Dark warm card
+  mutedForeground: "30 10% 60%",  // Muted warm grey
 };
 
 const defaultSettings: ThemeSettings = {
