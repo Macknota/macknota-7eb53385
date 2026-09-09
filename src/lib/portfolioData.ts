@@ -130,7 +130,7 @@ export const defaultPortfolioData: PortfolioData = {
     {
       role: "Full Stack Software Engineer",
       company: "Asus Card — Asas Al-Betaqat for Trading Est.",
-      location: "Remote",
+      location: "Cairo, Egypt",
       dates: "May 2026 – Present",
       type: "Full-time",
       highlights: [
