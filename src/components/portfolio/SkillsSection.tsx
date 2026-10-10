@@ -13,7 +13,7 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
     .filter((group) => group.skills.length > 0);
 
   return (
-    <section id="skills" className="border-b border-border py-20 md:py-28">
+    <section id="skills" className="border-b border-border py-16 md:py-28">
       <div className="shell">
         <SectionHeading
           index="03"
@@ -26,18 +26,18 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
           {groups.map((group, index) => (
             <Reveal
               key={group.key}
-              className="grid gap-4 border-t border-border py-7 md:grid-cols-12 md:gap-10 md:py-8"
+              className="grid gap-3 border-t border-border py-5 md:grid-cols-12 md:gap-10 md:py-8"
             >
               <dt className="flex items-baseline gap-4 md:col-span-4">
                 <span className="font-mono text-[11px] text-foreground/35">{String(index + 1).padStart(2, "0")}</span>
-                <span className="font-serif text-2xl leading-tight text-foreground">{group.title}</span>
+                <span className="font-serif text-xl leading-tight text-foreground md:text-2xl">{group.title}</span>
               </dt>
               <dd className="md:col-span-8">
-                <ul className="flex flex-wrap gap-2">
+                <ul className="flex flex-wrap gap-1.5 md:gap-2">
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="tag px-3 py-2 text-xs transition-colors hover:border-primary/50 hover:text-foreground"
+                      className="tag py-1.5 transition-colors hover:border-primary/50 hover:text-foreground md:px-3 md:py-2 md:text-xs"
                     >
                       <TechIcon name={skill} className="h-3.5 w-3.5 text-primary/80" />
                       {skill}

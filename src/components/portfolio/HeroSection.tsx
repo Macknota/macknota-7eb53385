@@ -21,25 +21,25 @@ const HeroSection = ({ data }: HeroSectionProps) => {
         aria-hidden="true"
       />
 
-      <div className="shell relative grid gap-12 pb-16 pt-28 md:pb-20 md:pt-36 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:items-end lg:gap-16">
+      <div className="shell relative grid gap-12 pb-12 pt-24 md:pb-20 md:pt-36 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:items-end lg:gap-16">
         <div className="hero-enter">
           {hero.profileImage && (
             <img
               src={hero.profileImage}
               alt={`Portrait of ${hero.name}`}
-              width={88}
-              height={88}
-              className="mb-7 h-[88px] w-[88px] rounded-full border border-primary/40 object-cover object-[50%_12%] p-1 lg:hidden"
+              width={72}
+              height={72}
+              className="mb-6 h-[72px] w-[72px] rounded-full border border-primary/40 object-cover object-[50%_12%] p-1 lg:hidden"
             />
           )}
           {hero.showStatusBadge && (
-            <p className="mb-8 inline-flex items-center gap-3 rounded-full border border-primary/30 bg-primary/[0.06] py-2 pl-4 pr-5 font-mono text-[10.5px] uppercase leading-snug tracking-[0.12em] text-primary sm:text-xs">
+            <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-primary/30 bg-primary/[0.06] py-1.5 pl-3 pr-4 font-mono text-[9.5px] uppercase leading-snug tracking-[0.08em] text-primary sm:mb-8 sm:gap-3 sm:py-2 sm:pl-4 sm:pr-5 sm:text-xs sm:tracking-[0.12em]">
               <span className="status-dot" />
               {hero.statusBadge}
             </p>
           )}
 
-          <p className="label-mono mb-4 leading-relaxed text-foreground/60">
+          <p className="label-mono mb-3 text-[10px] leading-relaxed text-foreground/60 sm:mb-4 sm:text-[11px]">
             {hero.title}
             {hero.focus && (
               <>
@@ -49,33 +49,34 @@ const HeroSection = ({ data }: HeroSectionProps) => {
             )}
           </p>
 
-          <h1 className="text-[3.1rem] leading-[0.98] text-foreground sm:text-7xl lg:text-[5.4rem]">
+          <h1 className="text-[2.45rem] leading-[1] text-foreground sm:text-7xl lg:text-[5.4rem]">
             {hero.name}
           </h1>
 
           {hero.tagline && (
-            <p className="mt-6 max-w-xl font-serif text-[1.7rem] italic leading-[1.15] text-foreground/80 sm:text-4xl">
+            <p className="mt-4 max-w-xl font-serif text-[1.3rem] italic leading-[1.2] text-foreground/80 sm:mt-6 sm:text-4xl">
               {hero.tagline}
             </p>
           )}
 
-          <ul className="mt-8 flex flex-wrap gap-2" aria-label="Core stack">
+          <ul className="mt-6 flex flex-wrap gap-1.5 sm:mt-8 sm:gap-2" aria-label="Core stack">
             {stack.map((item) => (
-              <li key={item} className="tag px-3 py-1.5 text-xs">
+              <li key={item} className="tag sm:px-3 sm:py-1.5 sm:text-xs">
                 {item}
               </li>
             ))}
           </ul>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href="#contact" className="btn btn-primary">
+          <div className="mt-7 grid grid-cols-2 gap-2.5 sm:mt-9 sm:flex sm:flex-wrap sm:gap-3">
+            <a href="#contact" className="btn btn-primary col-span-2">
               <Mail className="h-4 w-4" />
               Work with me
             </a>
             {hero.showCvButton && hero.cvFile && (
               <a href={hero.cvFile} download="Adel_Magdy_Macknota_CV.pdf" className="btn btn-ghost">
                 <Download className="h-4 w-4" />
-                Download Resume
+                <span className="sm:hidden">Resume</span>
+                <span className="hidden sm:inline">Download Resume</span>
               </a>
             )}
             <a
@@ -89,7 +90,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
             </a>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
+          <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-[13px] text-muted-foreground sm:mt-10 sm:gap-x-6 sm:text-sm">
             <span className="inline-flex items-center gap-2">
               <MapPin className="h-4 w-4 text-primary" />
               {contact.location} · Remote

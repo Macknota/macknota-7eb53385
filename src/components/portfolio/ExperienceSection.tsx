@@ -1,4 +1,5 @@
-import { ArrowDownRight, MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { PortfolioData } from "@/lib/portfolioData";
 import { toSlug } from "@/lib/contact";
 import Reveal from "./Reveal";
@@ -12,14 +13,14 @@ const ExperienceSection = ({ data }: ExperienceSectionProps) => {
   const platforms = data.projects.filter((project) => project.group === "professional");
 
   return (
-    <section id="experience" className="border-b border-border py-20 md:py-28">
+    <section id="experience" className="border-b border-border py-16 md:py-28">
       <div className="shell">
         <SectionHeading index="02" label="Experience" title="Where I've been building." />
 
         <ol>
           {data.experience.map((role, index) => (
             <li key={`${role.company}-${role.dates}`}>
-              <Reveal className="grid gap-4 border-t border-border py-10 md:grid-cols-12 md:gap-10 md:py-12">
+              <Reveal className="grid gap-4 border-t border-border py-8 md:grid-cols-12 md:gap-10 md:py-12">
                 <div className="md:col-span-4">
                   <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">{role.dates}</p>
                   <p className="mt-3 inline-flex items-center gap-2 text-sm text-muted-foreground">
@@ -32,14 +33,14 @@ const ExperienceSection = ({ data }: ExperienceSectionProps) => {
                 </div>
 
                 <div className="md:col-span-8">
-                  <h3 className="font-serif text-[1.8rem] leading-[1.1] text-foreground md:text-[2.1rem]">
+                  <h3 className="font-serif text-[1.5rem] leading-[1.1] text-foreground md:text-[2.1rem]">
                     {role.role}
                   </h3>
-                  <p className="mt-2 text-[15px] font-medium text-foreground/80">{role.company}</p>
+                  <p className="mt-2 text-sm font-medium text-foreground/80 md:text-[15px]">{role.company}</p>
 
                   <ul className="mt-6 space-y-3">
                     {role.highlights.map((highlight) => (
-                      <li key={highlight} className="flex gap-3 text-[15px] leading-relaxed text-muted-foreground">
+                      <li key={highlight} className="flex gap-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
                         <span className="mt-[0.7em] h-px w-4 shrink-0 bg-primary/70" aria-hidden="true" />
                         <span>{highlight}</span>
                       </li>
@@ -50,8 +51,8 @@ const ExperienceSection = ({ data }: ExperienceSectionProps) => {
                     <ul className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
                       {platforms.map((project) => (
                         <li key={project.name} className="bg-background">
-                          <a
-                            href={`#${toSlug(project.name)}`}
+                          <Link
+                            to={`/work/${toSlug(project.name)}`}
                             className="group flex h-full items-start justify-between gap-4 p-4 transition-colors hover:bg-card"
                           >
                             <span>
@@ -64,8 +65,8 @@ const ExperienceSection = ({ data }: ExperienceSectionProps) => {
                                 </span>
                               )}
                             </span>
-                            <ArrowDownRight className="mt-0.5 h-4 w-4 shrink-0 text-foreground/30 transition-colors group-hover:text-primary" />
-                          </a>
+                            <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-foreground/30 transition-colors group-hover:text-primary" />
+                          </Link>
                         </li>
                       ))}
                     </ul>

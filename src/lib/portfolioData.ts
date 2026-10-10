@@ -12,7 +12,7 @@ export type SkillKey =
 
 // Bump when the content model changes: saved dashboard data from an older
 // version is ignored so the site never renders stale copy.
-export const CONTENT_VERSION = 3;
+export const CONTENT_VERSION = 4;
 
 export interface PortfolioData {
   version?: number;
@@ -68,6 +68,7 @@ export interface PortfolioData {
     technologies: string[];
     description: string;
     features: string[];
+    details?: string[];
     link: string;
     images: string[];
     challenge?: string;
@@ -209,6 +210,13 @@ export const defaultPortfolioData: PortfolioData = {
         "Strict environment isolation across Sandbox, Simulation and Production.",
         "RBAC, encrypted credential storage, idempotency keys, queue-based retries, audit logging and automated end-to-end tests.",
       ],
+      details: [
+        "Designed an integration hub that abstracts the full ZATCA e-invoicing compliance workflow behind one API, so client systems integrate once instead of implementing the specification themselves.",
+        "Implemented the complete onboarding lifecycle: taxpayer/EGS registration, CSR generation and certificate handling, Compliance CSID, the 6/6 compliance checks, and Production CSID issuance.",
+        "Delivered B2B Clearance and B2C Reporting flows with ICV/PIH sequencing, evidence tracking, and outbound webhooks for asynchronous status updates.",
+        "Enforced strict environment isolation across Sandbox, Simulation and Production, with safeguards that block cross-environment and unauthorized calls.",
+        "Hardened the platform with RBAC, encrypted credential storage, idempotency keys, queue-based retries and full audit logging; covered it with automated SDK, API and browser end-to-end tests.",
+      ],
       link: "",
       images: [],
     },
@@ -225,6 +233,12 @@ export const defaultPortfolioData: PortfolioData = {
         "Automated ingestion of bank and payment-gateway settlement files, with background jobs backfilling missing partner data.",
         "Matching and exception-detection engine: mismatches, missing transactions, refunds, duplicates, fees, commissions and net settlements.",
         "Real-time dashboard (SignalR) and a monthly results view backed by atomic snapshot publishing.",
+      ],
+      details: [
+        "Designing and building an automated reconciliation platform to replace the manual comparison of bank settlements, payment-gateway data and merchant transactions.",
+        "Automated ingestion of bank and payment-gateway settlement files, with background jobs backfilling missing partner data.",
+        "Implemented a matching and exception-detection engine covering mismatches, missing transactions, refunds, duplicates, fees, commissions and net settlements.",
+        "Delivered a real-time dashboard (SignalR) and a monthly results view backed by atomic snapshot publishing for consistent, reproducible reporting.",
       ],
       link: "",
       images: [],
@@ -261,6 +275,13 @@ export const defaultPortfolioData: PortfolioData = {
         "Cut store home pages from 1.9 MB to 220 KB of JavaScript and eliminated mobile layout shift (CLS 0.81 → ~0).",
         "Fixed cross-store SEO: slug URLs, canonical URLs, JSON-LD, bilingual FAQs and CI checks guarding SEO routing.",
       ],
+      details: [
+        "Contributed to a multi-tenant e-commerce platform where one React codebase serves many branded, Arabic-first stores for digital gift cards and game top-ups.",
+        "Rebuilt the Purple Card storefront against a new design (checkout, profile, notifications, dark mode and a mobile redesign) and built its loyalty system from scratch: customer points, tiers, Shop with Points, and the merchant-side loyalty control center.",
+        "Built Ish7an's brand theming layer, splash screen, category navigation, product activation guide and mobile layout; reworked its buy-now flow, currency conversion and payment layout.",
+        "Cut store home pages from 1.9 MB to 220 KB of JavaScript by isolating brand and template code, and eliminated mobile layout shift (CLS from up to 0.81 to ~0).",
+        "Fixed cross-store SEO on a client-rendered app: migrated catalog URLs to slugs, preserved server-rendered titles, canonical URLs and JSON-LD for Google, auto-generated bilingual FAQs for every product page, and added CI checks that guard SEO routing.",
+      ],
       link: "",
       images: [],
     },
@@ -278,6 +299,12 @@ export const defaultPortfolioData: PortfolioData = {
         "Multi-provider LLM routing with fallback, plus a fact-validation layer that guards against hallucinated output.",
         "Controlled review → approval → apply pipelines with live verification and rollback.",
       ],
+      details: [
+        "Engineering an SEO intelligence and automation system for a large e-commerce catalog, replacing fragmented manual optimization, stale SEO data and unsafe bulk updates.",
+        "Designed a workflow that groups related products, detects SEO gaps and generates field-level AI recommendations grounded in Google Search Console and live product data.",
+        "Implemented multi-provider LLM routing with fallback, plus a fact-validation and content-quality layer that guards against hallucinated output.",
+        "Built controlled review → approval → apply pipelines with live verification and rollback, protected by idempotency, stale-data detection and permission checks.",
+      ],
       link: "",
       images: [],
     },
@@ -293,6 +320,12 @@ export const defaultPortfolioData: PortfolioData = {
         "Basket data cached in Redis to cut read latency.",
         "20+ endpoints secured with JWT and role-based authorization; Stripe payments and Docker deployment.",
       ],
+      details: [
+        "Architected the backend with Clean (Onion) Architecture across 4 layers to enforce separation of concerns and SOLID principles.",
+        "Implemented the Specification Pattern with a Generic Repository to remove repeated query logic across the codebase.",
+        "Cached basket data in Redis to cut read latency compared with direct database queries.",
+        "Secured 20+ endpoints with JWT authentication and role-based authorization; integrated Stripe payments and Docker deployment.",
+      ],
       link: "https://github.com/Macknota/E-Commerce",
       images: [],
     },
@@ -306,6 +339,10 @@ export const defaultPortfolioData: PortfolioData = {
         "Responsive Angular 18 SPA with a modular component architecture and RxJS (10+ reusable components).",
         "Real-time messaging and live presence with SignalR.",
         "Secure REST API (15+ endpoints) with JWT, likes/matches modelling and cloud photo storage.",
+      ],
+      details: [
+        "Built a responsive Angular 18 SPA with a modular component architecture and RxJS, with 10+ reusable components.",
+        "Implemented real-time messaging and live presence with SignalR, behind a secure REST API (15+ endpoints) with JWT authentication, likes/matches modelling and cloud photo storage.",
       ],
       link: "",
       images: [],

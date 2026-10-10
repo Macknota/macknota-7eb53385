@@ -18,15 +18,15 @@ const Footer = ({ data }: FooterProps) => {
 
   return (
     <footer className="border-t border-border">
-      <div className="shell flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between">
+      <div className="shell flex flex-col gap-6 py-8 md:flex-row md:gap-8 md:py-10 md:items-center md:justify-between">
         <div>
-          <p className="font-serif text-2xl text-foreground">{hero.name}</p>
+          <p className="font-serif text-xl text-foreground md:text-2xl">{hero.name}</p>
           <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground/50">
             {hero.title} · {contact.location}
           </p>
         </div>
 
-        <ul className="flex flex-wrap items-center gap-x-6 gap-y-3">
+        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2.5 md:gap-x-6">
           {links.map((link) => (
             <li key={link.label}>
               <a

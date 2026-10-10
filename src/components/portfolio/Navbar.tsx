@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { PortfolioData } from "@/lib/portfolioData";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "#work", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
-  { href: "#about", label: "About" },
+  { hash: "#work", label: "Work" },
+  { hash: "#experience", label: "Experience" },
+  { hash: "#skills", label: "Skills" },
+  { hash: "#about", label: "About" },
 ];
 
 interface NavbarProps {
@@ -41,36 +42,36 @@ const Navbar = ({ data }: NavbarProps) => {
           : "border-transparent bg-transparent",
       )}
     >
-      <div className="shell flex h-16 items-center justify-between gap-6">
-        <a href="#top" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 font-serif text-lg leading-none text-primary">
+      <div className="shell flex h-14 items-center md:h-16 justify-between gap-6">
+        <Link to={{ pathname: "/", hash: "#top" }} className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/40 font-serif text-base md:h-9 md:w-9 md:text-lg leading-none text-primary">
             A
           </span>
           <span className="text-sm font-semibold tracking-tight text-foreground">
             {data.hero.logoText || data.hero.name}
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+            <Link
+              key={link.hash}
+              to={{ pathname: "/", hash: link.hash }}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href="#contact" className="btn btn-primary hidden h-10 px-4 sm:inline-flex">
+          <Link to={{ pathname: "/", hash: "#contact" }} className="btn btn-primary hidden h-10 px-4 sm:inline-flex">
             Work with me
             <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </Link>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 text-foreground md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 text-foreground md:hidden"
             onClick={() => setIsOpen((open) => !open)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
@@ -81,25 +82,29 @@ const Navbar = ({ data }: NavbarProps) => {
       </div>
 
       {isOpen && (
-        <nav className="shell h-[calc(100dvh-4rem)] border-t border-border pb-8 pt-4 md:hidden" aria-label="Mobile">
+        <nav className="shell h-[calc(100dvh-3.5rem)] border-t border-border pb-8 pt-4 md:hidden" aria-label="Mobile">
           <ul className="flex flex-col">
             {navLinks.map((link, index) => (
-              <li key={link.href} className="border-b border-border">
-                <a
-                  href={link.href}
+              <li key={link.hash} className="border-b border-border">
+                <Link
+                  to={{ pathname: "/", hash: link.hash }}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-baseline gap-4 py-4 font-serif text-3xl text-foreground"
+                  className="flex items-baseline gap-4 py-3.5 font-serif text-2xl text-foreground"
                 >
                   <span className="font-mono text-[11px] text-primary">0{index + 1}</span>
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-          <a href="#contact" onClick={() => setIsOpen(false)} className="btn btn-primary mt-6 w-full">
+          <Link
+            to={{ pathname: "/", hash: "#contact" }}
+            onClick={() => setIsOpen(false)}
+            className="btn btn-primary mt-6 w-full"
+          >
             Work with me
             <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </Link>
         </nav>
       )}
     </header>

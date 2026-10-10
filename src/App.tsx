@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ProjectDetail from "./pages/ProjectDetail";
 
 // The admin area (sign-in, dashboard and the providers only it needs) is opened
 // by the site owner alone, so it stays out of the public bundle.
@@ -18,6 +19,7 @@ const App = () => (
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/work/:slug" element={<ProjectDetail />} />
         <Route path="/login" element={<AdminApp page="login" />} />
         <Route path="/dashboard" element={<AdminApp page="dashboard" />} />
         <Route path="*" element={<NotFound />} />

@@ -8,7 +8,7 @@ interface AboutSectionProps {
 }
 
 const Fact = ({ label, children }: { label: string; children: ReactNode }) => (
-  <div className="border-t border-border py-6 first:border-t-0 first:pt-0">
+  <div className="border-t border-border py-5 first:border-t-0 first:pt-0 last:pb-0 md:py-6">
     <p className="label-mono mb-3">{label}</p>
     {children}
   </div>
@@ -19,7 +19,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
   const { education } = data;
 
   return (
-    <section id="about" className="border-b border-border py-20 md:py-28">
+    <section id="about" className="border-b border-border py-16 md:py-28">
       <div className="shell">
         <SectionHeading index="04" label={data.about.title || "About"} title="Architecture as much as working code." />
 
@@ -30,8 +30,8 @@ const AboutSection = ({ data }: AboutSectionProps) => {
                 key={index}
                 className={
                   index === 0
-                    ? "text-lg leading-relaxed text-foreground/90 md:text-xl md:leading-relaxed"
-                    : "text-[15px] leading-relaxed text-muted-foreground md:text-base md:leading-relaxed"
+                    ? "text-base leading-relaxed text-foreground/90 md:text-xl md:leading-relaxed"
+                    : "text-sm leading-relaxed text-muted-foreground md:text-base md:leading-relaxed"
                 }
               >
                 {paragraph}
@@ -40,9 +40,9 @@ const AboutSection = ({ data }: AboutSectionProps) => {
           </Reveal>
 
           <Reveal delay={100} className="lg:col-span-5">
-            <div className="rounded-2xl border border-border bg-card/40 p-6 md:p-8">
+            <div className="rounded-2xl border border-border bg-card/40 p-5 md:p-8">
               <Fact label="Education">
-                <p className="font-serif text-xl leading-snug text-foreground">{education.degree}</p>
+                <p className="font-serif text-lg leading-snug text-foreground md:text-xl">{education.degree}</p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {education.university} · {education.graduationYear}
                 </p>
@@ -56,7 +56,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
                 <Fact label="Training">
                   {data.courses.map((course) => (
                     <div key={course.name}>
-                      <p className="font-serif text-xl leading-snug text-foreground">
+                      <p className="font-serif text-lg leading-snug text-foreground md:text-xl">
                         {course.name} <span className="text-foreground/50">· {course.year}</span>
                       </p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{course.description}</p>

@@ -31,15 +31,15 @@ const HighlightsSection = ({ data }: HighlightsSectionProps) => {
             <Reveal
               key={stat.label}
               delay={index * 90}
-              className="py-8 md:px-8 md:py-12 md:first:pl-0 md:last:pr-0"
+              className="py-6 md:px-8 md:py-12 md:first:pl-0 md:last:pr-0"
             >
-              <dt className="label-mono mb-4">{stat.label}</dt>
+              <dt className="label-mono mb-2.5 md:mb-4">{stat.label}</dt>
               <dd>
-                <span className="block whitespace-nowrap font-serif text-[2.1rem] leading-none text-foreground sm:text-[2.6rem] md:text-[2.2rem] lg:text-[2.9rem]">
+                <span className="block whitespace-nowrap font-serif text-[1.75rem] leading-none text-foreground sm:text-[2.6rem] md:text-[2.2rem] lg:text-[2.9rem]">
                   <StatValue value={stat.value} />
                 </span>
                 {stat.detail && (
-                  <span className="mt-3 block text-sm leading-relaxed text-muted-foreground">{stat.detail}</span>
+                  <span className="mt-2 block text-[13px] leading-relaxed text-muted-foreground md:mt-3 md:text-sm">{stat.detail}</span>
                 )}
               </dd>
             </Reveal>

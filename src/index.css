@@ -64,7 +64,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 4.5rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -111,11 +111,11 @@
   }
 
   .tag {
-    @apply inline-flex items-center gap-1.5 rounded-md border border-border bg-foreground/[0.03] px-2.5 py-1 font-mono text-[11px] leading-none text-foreground/75;
+    @apply inline-flex items-center gap-1.5 rounded-md border border-border bg-foreground/[0.03] px-2 py-1 font-mono text-[10.5px] leading-none text-foreground/75 sm:px-2.5 sm:text-[11px];
   }
 
   .btn {
-    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors duration-200;
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-full px-4 text-[13px] font-semibold transition-colors duration-200 sm:h-11 sm:px-5 sm:text-sm;
   }
 
   .btn-primary {
