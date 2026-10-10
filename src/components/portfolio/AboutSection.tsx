@@ -1,106 +1,82 @@
+import type { ReactNode } from "react";
 import { PortfolioData } from "@/lib/portfolioData";
-import { Card, CardContent } from "@/components/ui/card";
-import { GraduationCap, Shield, BookOpen, Languages } from "lucide-react";
+import Reveal from "./Reveal";
+import SectionHeading from "./SectionHeading";
 
 interface AboutSectionProps {
   data: PortfolioData;
 }
 
+const Fact = ({ label, children }: { label: string; children: ReactNode }) => (
+  <div className="border-t border-border py-6 first:border-t-0 first:pt-0">
+    <p className="label-mono mb-3">{label}</p>
+    {children}
+  </div>
+);
+
 const AboutSection = ({ data }: AboutSectionProps) => {
+  const paragraphs = data.about.description.split(/\n\s*\n/).filter(Boolean);
+  const { education } = data;
+
   return (
-    <section id="about" className="py-12 md:py-20 bg-muted/30">
-      <div className="container px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Section Title */}
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
-              {data.about.title}
-            </h2>
-            <div className="w-16 md:w-20 h-1 bg-primary/60 mx-auto rounded-full" />
-          </div>
-          
-          {/* About Text */}
-          <p className="text-sm md:text-lg text-muted-foreground leading-relaxed text-center mb-8 md:mb-12 px-2">
-            {data.about.description}
-          </p>
-          
-          {/* Info Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            {/* Education */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
-              <CardContent className="p-4 md:p-6">
-                <div className="flex items-start gap-3 md:gap-4">
-                  <div className="p-2 md:p-3 rounded-lg bg-primary/10 pop-icon flex-shrink-0">
-                    <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-foreground mb-1 text-sm md:text-base">Education</h3>
-                    <p className="text-xs md:text-sm text-muted-foreground">{data.education.degree}</p>
-                    <p className="text-xs md:text-sm text-muted-foreground">{data.education.university}</p>
-                    <p className="text-xs md:text-sm text-primary mt-1.5 md:mt-2">
-                      {data.education.graduationYear} • Grade: {data.education.grade}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Military Status */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
-              <CardContent className="p-4 md:p-6">
-                <div className="flex items-start gap-3 md:gap-4">
-                  <div className="p-2 md:p-3 rounded-lg bg-primary/10 pop-icon flex-shrink-0">
-                    <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-foreground mb-1 text-sm md:text-base">Military Status</h3>
-                    <p className="text-xs md:text-sm text-muted-foreground">{data.education.militaryStatus}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Courses */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
-              <CardContent className="p-4 md:p-6">
-                <div className="flex items-start gap-3 md:gap-4">
-                  <div className="p-2 md:p-3 rounded-lg bg-primary/10 pop-icon flex-shrink-0">
-                    <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-foreground mb-1 text-sm md:text-base">Courses</h3>
-                    {data.courses.map((course, index) => (
-                      <div key={index} className="mb-1.5 md:mb-2">
-                        <p className="text-xs md:text-sm text-muted-foreground">{course.year}: {course.name}</p>
-                        <p className="text-[10px] md:text-xs text-muted-foreground/70">{course.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Languages */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card slide-up">
-              <CardContent className="p-4 md:p-6">
-                <div className="flex items-start gap-3 md:gap-4">
-                  <div className="p-2 md:p-3 rounded-lg bg-primary/10 pop-icon flex-shrink-0">
-                    <Languages className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-foreground mb-1 text-sm md:text-base">Languages</h3>
-                    <div className="space-y-0.5 md:space-y-1">
-                      {data.languages.map((lang, index) => (
-                        <p key={index} className="text-xs md:text-sm text-muted-foreground">
-                          <span className="font-medium">{lang.name}:</span> {lang.level}
-                        </p>
-                      ))}
+    <section id="about" className="border-b border-border py-20 md:py-28">
+      <div className="shell">
+        <SectionHeading index="04" label={data.about.title || "About"} title="Architecture as much as working code." />
+
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="space-y-5 lg:col-span-7">
+            {paragraphs.map((paragraph, index) => (
+              <p
+                key={index}
+                className={
+                  index === 0
+                    ? "text-lg leading-relaxed text-foreground/90 md:text-xl md:leading-relaxed"
+                    : "text-[15px] leading-relaxed text-muted-foreground md:text-base md:leading-relaxed"
+                }
+              >
+                {paragraph}
+              </p>
+            ))}
+          </Reveal>
+
+          <Reveal delay={100} className="lg:col-span-5">
+            <div className="rounded-2xl border border-border bg-card/40 p-6 md:p-8">
+              <Fact label="Education">
+                <p className="font-serif text-xl leading-snug text-foreground">{education.degree}</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {education.university} · {education.graduationYear}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Grade: {education.grade}
+                  {education.militaryStatus && ` · Military service: ${education.militaryStatus}`}
+                </p>
+              </Fact>
+
+              {data.courses.length > 0 && (
+                <Fact label="Training">
+                  {data.courses.map((course) => (
+                    <div key={course.name}>
+                      <p className="font-serif text-xl leading-snug text-foreground">
+                        {course.name} <span className="text-foreground/50">· {course.year}</span>
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{course.description}</p>
                     </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                  ))}
+                </Fact>
+              )}
+
+              <Fact label="Languages">
+                <ul className="space-y-2">
+                  {data.languages.map((language) => (
+                    <li key={language.name} className="flex items-baseline justify-between gap-4 text-sm">
+                      <span className="font-medium text-foreground">{language.name}</span>
+                      <span className="text-right text-muted-foreground">{language.level}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Fact>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

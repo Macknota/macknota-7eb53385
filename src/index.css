@@ -1,327 +1,142 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Design tokens. All colors are HSL triplets consumed through tailwind.config.ts.
+   Navy #0A0F1E · teal #5EEAD4 · soft light #F4F6FB */
 
 @layer base {
   :root {
-    /* Orange Sunset Theme */
-    --background: 226 50% 8%;
-    --foreground: 223 50% 97%;
+    color-scheme: dark;
 
-    --card: 226 40% 11%;
-    --card-foreground: 223 50% 97%;
+    --background: 225 50% 8%;
+    --foreground: 223 47% 97%;
 
-    --popover: 226 40% 11%;
-    --popover-foreground: 223 50% 97%;
+    --card: 225 42% 10.5%;
+    --card-foreground: 223 47% 97%;
 
-    --primary: 171 77% 64%;         /* Orange */
-    --primary-foreground: 226 50% 8%;
-
-    --secondary: 225 30% 16%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 225 30% 14%;
-    --muted-foreground: 222 15% 65%;
-
-    --accent: 171 60% 50%;         /* Golden Orange */
-    --accent-foreground: 226 50% 8%;
-
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 224 25% 20%;
-    --input: 224 25% 20%;
-    --ring: 171 77% 64%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 226 50% 6%;
-    --sidebar-foreground: 223 50% 97%;
-    --sidebar-primary: 171 77% 64%;
-    --sidebar-primary-foreground: 226 50% 8%;
-    --sidebar-accent: 171 60% 50%;
-    --sidebar-accent-foreground: 226 50% 8%;
-    --sidebar-border: 224 25% 20%;
-    --sidebar-ring: 171 77% 64%;
-
-    --chart-1: 171 77% 64%;
-    --chart-2: 171 60% 50%;
-    --chart-3: 15 80% 55%;
-    --chart-4: 45 80% 50%;
-    --chart-5: 5 90% 60%;
-
-    --sidebar: 226 50% 6%;
-
-    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.2);
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.2);
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 2px 4px -1px hsl(0 0% 0% / 0.2);
-    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 4px 6px -1px hsl(0 0% 0% / 0.2);
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 8px 10px -1px hsl(0 0% 0% / 0.2);
-    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.4);
-
-    /* Glow shadows */
-    --glow-primary: 0 0 20px hsl(171 77% 64% / 0.4), 0 0 40px hsl(171 77% 64% / 0.2);
-    --glow-accent: 0 0 20px hsl(171 60% 50% / 0.4), 0 0 40px hsl(171 60% 50% / 0.2);
-
-    --tracking-normal: 0em;
-    --spacing: 0.25rem;
-  }
-
-  .dark {
-    /* Orange Night Theme */
-    --background: 226 50% 8%;
-    --foreground: 223 50% 97%;
-
-    --card: 226 40% 11%;
-    --card-foreground: 223 50% 97%;
-
-    --popover: 226 40% 11%;
-    --popover-foreground: 223 50% 97%;
+    --popover: 225 42% 10.5%;
+    --popover-foreground: 223 47% 97%;
 
     --primary: 171 77% 64%;
-    --primary-foreground: 226 50% 8%;
+    --primary-foreground: 225 50% 8%;
 
-    --secondary: 225 30% 16%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 225 32% 15%;
+    --secondary-foreground: 223 47% 97%;
 
-    --muted: 225 30% 14%;
-    --muted-foreground: 222 15% 65%;
+    --muted: 225 32% 13%;
+    --muted-foreground: 222 16% 66%;
 
     --accent: 171 60% 50%;
-    --accent-foreground: 226 50% 8%;
+    --accent-foreground: 225 50% 8%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 224 25% 20%;
-    --input: 224 25% 20%;
+    --border: 224 26% 18%;
+    --input: 224 26% 20%;
     --ring: 171 77% 64%;
 
-    --sidebar-background: 226 50% 6%;
-    --sidebar-foreground: 223 50% 97%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 225 50% 6%;
+    --sidebar-foreground: 223 47% 97%;
     --sidebar-primary: 171 77% 64%;
-    --sidebar-primary-foreground: 226 50% 8%;
-    --sidebar-accent: 171 60% 50%;
-    --sidebar-accent-foreground: 226 50% 8%;
-    --sidebar-border: 224 25% 20%;
+    --sidebar-primary-foreground: 225 50% 8%;
+    --sidebar-accent: 225 32% 15%;
+    --sidebar-accent-foreground: 223 47% 97%;
+    --sidebar-border: 224 26% 18%;
     --sidebar-ring: 171 77% 64%;
 
-    --chart-1: 171 77% 64%;
-    --chart-2: 171 60% 50%;
-    --chart-3: 15 80% 55%;
-    --chart-4: 45 80% 50%;
-    --chart-5: 5 90% 60%;
-    --sidebar: 226 50% 6%;
-
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.2);
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.2);
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 2px 4px -1px hsl(0 0% 0% / 0.2);
-    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 4px 6px -1px hsl(0 0% 0% / 0.2);
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 8px 10px -1px hsl(0 0% 0% / 0.2);
-    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.4);
-
-    --glow-primary: 0 0 20px hsl(171 77% 64% / 0.4), 0 0 40px hsl(171 77% 64% / 0.2);
-    --glow-accent: 0 0 20px hsl(171 60% 50% / 0.4), 0 0 40px hsl(171 60% 50% / 0.2);
-  }
-}
-
-/* Interactive Elements - Pop/Scale Effects */
-@layer components {
-  .interactive-card {
-    @apply transition-all duration-300 ease-out;
-  }
-  
-  .interactive-card:hover {
-    @apply scale-[1.02] shadow-lg;
-  }
-  
-  .interactive-card:active {
-    @apply scale-[0.98];
-  }
-  
-  .pop-element {
-    @apply transition-transform duration-200 ease-out;
-  }
-  
-  .pop-element:hover {
-    @apply scale-105;
-  }
-  
-  .pop-element:active {
-    @apply scale-95;
-  }
-  
-  .pop-badge {
-    @apply transition-all duration-200 ease-out cursor-default;
-  }
-  
-  .pop-badge:hover {
-    @apply scale-110 shadow-md;
-  }
-  
-  .pop-icon {
-    @apply transition-all duration-200 ease-out;
-  }
-  
-  .pop-icon:hover {
-    @apply scale-125 rotate-6;
-  }
-  
-  .glow-effect {
-    @apply transition-all duration-300;
-    box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
-  }
-  
-  .glow-effect:hover {
-    box-shadow: 0 0 25px hsl(var(--primary) / 0.5), 0 0 50px hsl(var(--primary) / 0.3);
-    transform: translateY(-2px);
+    --shadow-2xs: 0 1px 2px 0 hsl(0 0% 0% / 0.2);
+    --shadow-xs: 0 1px 2px 0 hsl(0 0% 0% / 0.2);
+    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
+    --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 12px -2px hsl(0 0% 0% / 0.35);
+    --shadow-lg: 0 12px 32px -8px hsl(0 0% 0% / 0.45);
+    --shadow-xl: 0 24px 56px -16px hsl(0 0% 0% / 0.55);
+    --shadow-2xl: 0 32px 80px -20px hsl(0 0% 0% / 0.6);
   }
 
-  .glow-card {
-    @apply transition-all duration-300;
-    box-shadow: 0 0 15px hsl(var(--primary) / 0.15);
-    border: 1px solid hsl(var(--primary) / 0.2);
-  }
-
-  .glow-card:hover {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.3), 0 0 60px hsl(var(--accent) / 0.15);
-    border-color: hsl(var(--primary) / 0.4);
-  }
-
-  .glow-button {
-    @apply transition-all duration-300;
-    box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
-  }
-
-  .glow-button:hover {
-    box-shadow: 0 0 25px hsl(var(--primary) / 0.5), 0 0 50px hsl(var(--primary) / 0.3);
-  }
-  
-  .slide-up {
-    @apply transition-all duration-300;
-  }
-  
-  .slide-up:hover {
-    @apply -translate-y-1;
-  }
-
-  /* Gradient text animation */
-  @keyframes gradient-shift {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  .animate-gradient {
-    animation: gradient-shift 6s ease infinite;
-  }
-
-  /* Floating animation */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
-
-  /* Shimmer effect for borders */
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  .shimmer-border {
-    position: relative;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
-  }
-
-  /* Subtle pulse glow */
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
-    }
-    50% {
-      box-shadow: 0 0 25px hsl(var(--primary) / 0.4);
-    }
-  }
-
-  .pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-
-  /* Smooth reveal animation */
-  @keyframes reveal {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-reveal {
-    animation: reveal 0.6s ease-out forwards;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
   }
 
-  h1, h2 {
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1,
+  h2 {
     @apply font-serif font-normal tracking-tight;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.28);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary) / 0.7);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
 @layer components {
+  .shell {
+    @apply mx-auto w-full max-w-[1160px] px-5 sm:px-8;
+  }
+
   .dot-grid {
     background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 
   .label-mono {
-    @apply font-mono text-[11px] md:text-xs uppercase tracking-[0.18em] text-primary;
+    @apply font-mono text-[11px] uppercase tracking-[0.2em] text-primary;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-md border border-border bg-foreground/[0.03] px-2.5 py-1 font-mono text-[11px] leading-none text-foreground/75;
+  }
+
+  .btn {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/85;
+  }
+
+  .btn-ghost {
+    @apply border border-foreground/15 text-foreground hover:border-primary/60 hover:text-primary;
+  }
+
+  .link-underline {
+    @apply underline decoration-foreground/20 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary/60;
   }
 
   .reveal {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
   }
 
   .reveal.is-visible {
@@ -329,7 +144,56 @@ All colors MUST be HSL.
     transform: none;
   }
 
+  @keyframes status-ping {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    80%,
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+
+  .status-dot {
+    @apply relative inline-block h-2 w-2 shrink-0 rounded-full bg-primary;
+  }
+
+  .status-dot::after {
+    content: "";
+    @apply absolute inset-0 rounded-full bg-primary;
+    animation: status-ping 2.2s ease-out infinite;
+  }
+
+  @keyframes hero-enter {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .hero-enter {
+    animation: hero-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero-enter {
+      animation: none;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .status-dot::after {
+      animation: none;
+    }
   }
 }

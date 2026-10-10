@@ -1,153 +1,158 @@
+import { ArrowDown, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { PortfolioData } from "@/lib/portfolioData";
-import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Phone, MapPin, ChevronDown, Download } from "lucide-react";
-import { useEffect, useState } from "react";
-import GeometricBackground from "./GeometricBackground";
+import { whatsappLink } from "@/lib/contact";
+import { WhatsAppIcon } from "./TechIcon";
 
 interface HeroSectionProps {
   data: PortfolioData;
 }
 
 const HeroSection = ({ data }: HeroSectionProps) => {
-  const cleanWhatsapp = data.contact.whatsapp?.replace(/[^0-9]/g, '') || '';
-  const whatsappLink = `https://wa.me/${cleanWhatsapp}`;
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const { hero, contact } = data;
+  const stack = hero.subtitle
+    .split("·")
+    .map((item) => item.trim())
+    .filter(Boolean);
 
-  const handleDownloadCV = () => {
-    if (data.hero.cvFile) {
-      const link = document.createElement('a');
-      link.href = data.hero.cvFile;
-      link.download = `${data.hero.name.replace(/\s+/g, '_')}_CV.pdf`;
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-  
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Geometric Network Particle Background */}
-      <GeometricBackground />
-      
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
-      
-      {/* Animated decorative elements - smaller on mobile */}
-      <div className="absolute top-20 left-5 md:left-10 w-40 md:w-72 h-40 md:h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-5 md:right-10 w-48 md:w-96 h-48 md:h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-gradient-to-r from-primary/5 to-accent/5 rounded-full blur-3xl" />
-      
-      <div className="container relative z-10 px-5 md:px-4 py-20 md:py-20">
-        <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {/* Profile Image */}
-          {data.hero.profileImage && (
-            <div className="mb-6 md:mb-8 group relative z-20">
-              <div className="relative inline-block animate-float">
-                {/* Animated ring */}
-                <div className="absolute inset-[-6px] md:inset-[-8px] bg-gradient-to-r from-primary via-accent to-primary rounded-full animate-spin" style={{ animationDuration: "8s" }} />
-                <div className="absolute inset-[-3px] md:inset-[-4px] bg-background rounded-full" />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-md opacity-50 group-hover:opacity-80 transition-opacity duration-300 animate-pulse" />
-                <img
-                  src={data.hero.profileImage}
-                  alt={data.hero.name}
-                  className="relative w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-background shadow-2xl object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="eager"
-                />
-              </div>
-            </div>
+    <section id="top" className="relative overflow-hidden border-b border-border">
+      <div
+        className="dot-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_70%_30%,black,transparent)]"
+        aria-hidden="true"
+      />
+
+      <div className="shell relative grid gap-12 pb-16 pt-28 md:pb-20 md:pt-36 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:items-end lg:gap-16">
+        <div className="hero-enter">
+          {hero.profileImage && (
+            <img
+              src={hero.profileImage}
+              alt={`Portrait of ${hero.name}`}
+              width={88}
+              height={88}
+              className="mb-7 h-[88px] w-[88px] rounded-full border border-primary/40 object-cover object-[50%_12%] p-1 lg:hidden"
+            />
           )}
-          
-          {/* Status Badge - smaller text on mobile */}
-          {data.hero.showStatusBadge && (
-            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-primary/10 text-primary mb-4 md:mb-6 font-mono text-xs md:text-sm pop-element border border-primary/20">
-              <span className="w-1.5 md:w-2 h-1.5 md:h-2 rounded-full bg-green-500 animate-pulse" />
-              {data.hero.statusBadge || "Available for opportunities"}
-            </div>
+          {hero.showStatusBadge && (
+            <p className="mb-8 inline-flex items-center gap-3 rounded-full border border-primary/30 bg-primary/[0.06] py-2 pl-4 pr-5 font-mono text-[10.5px] uppercase leading-snug tracking-[0.12em] text-primary sm:text-xs">
+              <span className="status-dot" />
+              {hero.statusBadge}
+            </p>
           )}
-          
-          {/* Name - clean styling */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2 md:mb-4 tracking-tight leading-tight">
-            {data.hero.name}
-          </h1>
-          
-          {/* Title - subtle primary color */}
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-primary mb-4 md:mb-6">
-            {data.hero.title}
-          </h2>
-          
-          {/* Subtitle - smaller on mobile */}
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-5 md:mb-8 px-2 leading-relaxed">
-            {data.hero.subtitle}
+
+          <p className="label-mono mb-4 leading-relaxed text-foreground/60">
+            {hero.title}
+            {hero.focus && (
+              <>
+                <span className="text-foreground/30"> — </span>
+                <span className="text-primary">{hero.focus}</span>
+              </>
+            )}
           </p>
-          
-          {/* Location - smaller on mobile */}
-          <div className="flex items-center justify-center gap-2 text-muted-foreground mb-6 md:mb-8 pop-element text-sm md:text-base">
-            <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4" />
-            <span>{data.contact.location}</span>
-          </div>
-          
-          {/* CTA Buttons - stack vertically on small mobile, wrap on larger */}
-          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-2">
-            <Button size="default" className="gap-2 pop-element glow-button w-full sm:w-auto text-sm md:text-base" asChild>
-              <a href={`mailto:${data.contact.email}`}>
-                <Mail className="w-4 h-4" />
-                Contact Me
-              </a>
-            </Button>
-            <Button size="default" variant="outline" className="gap-2 pop-element glow-effect border-primary/50 hover:border-primary hover:bg-primary/10 w-full sm:w-auto text-sm md:text-base" asChild>
-              <a href="#" onClick={(e) => { e.preventDefault(); handleDownloadCV(); }}>
-                <Download className="w-4 h-4" />
+
+          <h1 className="text-[3.1rem] leading-[0.98] text-foreground sm:text-7xl lg:text-[5.4rem]">
+            {hero.name}
+          </h1>
+
+          {hero.tagline && (
+            <p className="mt-6 max-w-xl font-serif text-[1.7rem] italic leading-[1.15] text-foreground/80 sm:text-4xl">
+              {hero.tagline}
+            </p>
+          )}
+
+          <ul className="mt-8 flex flex-wrap gap-2" aria-label="Core stack">
+            {stack.map((item) => (
+              <li key={item} className="tag px-3 py-1.5 text-xs">
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href="#contact" className="btn btn-primary">
+              <Mail className="h-4 w-4" />
+              Work with me
+            </a>
+            {hero.showCvButton && hero.cvFile && (
+              <a href={hero.cvFile} download="Adel_Magdy_Macknota_CV.pdf" className="btn btn-ghost">
+                <Download className="h-4 w-4" />
                 Download Resume
               </a>
-            </Button>
-            <Button size="default" variant="outline" className="gap-2 pop-element border-accent/50 hover:border-accent hover:bg-accent/10 w-full sm:w-auto text-sm md:text-base" asChild>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <Phone className="w-4 h-4" />
-                WhatsApp
-              </a>
-            </Button>
+            )}
+            <a
+              href={whatsappLink(contact.whatsapp)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp
+            </a>
           </div>
-          
-          {/* Social Links - smaller on mobile */}
-          <div className="flex items-center justify-center gap-3 md:gap-4">
+
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              {contact.location} · Remote
+            </span>
             <a
-              href={data.contact.github}
+              href={contact.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 md:p-3 rounded-full bg-card border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 pop-icon glow-effect"
+              className="inline-flex items-center gap-2 transition-colors hover:text-primary"
             >
-              <Github className="w-5 h-5 md:w-6 md:h-6" />
+              <Github className="h-4 w-4" />
+              GitHub
             </a>
             <a
-              href={data.contact.linkedin}
+              href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 md:p-3 rounded-full bg-card border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 pop-icon glow-effect"
+              className="inline-flex items-center gap-2 transition-colors hover:text-primary"
             >
-              <Linkedin className="w-5 h-5 md:w-6 md:h-6" />
-            </a>
-            <a
-              href={`mailto:${data.contact.email}`}
-              className="p-2.5 md:p-3 rounded-full bg-card border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 pop-icon glow-effect"
-            >
-              <Mail className="w-5 h-5 md:w-6 md:h-6" />
+              <Linkedin className="h-4 w-4" />
+              LinkedIn
             </a>
           </div>
         </div>
+
+        {hero.profileImage && (
+          <figure
+            className="hero-enter relative hidden lg:block"
+            style={{ animationDelay: "120ms" }}
+          >
+            <span className="absolute -left-3 -top-3 h-10 w-10 border-l border-t border-primary/60" aria-hidden="true" />
+            <span className="absolute -bottom-3 -right-3 h-10 w-10 border-b border-r border-primary/60" aria-hidden="true" />
+            <div className="relative overflow-hidden rounded-2xl border border-foreground/10 bg-card">
+              <img
+                src={hero.profileImage}
+                alt={`Portrait of ${hero.name}`}
+                width={880}
+                height={1100}
+                className="aspect-[4/5] w-full object-cover"
+                loading="eager"
+              />
+              <div
+                className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/60 to-transparent"
+                aria-hidden="true"
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5">
+                <span className="block font-serif text-xl leading-tight text-foreground">{hero.name}</span>
+                <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/60">
+                  {hero.title}
+                </span>
+              </figcaption>
+            </div>
+          </figure>
+        )}
       </div>
-      
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce pop-element">
-        <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-          <span className="text-sm">Scroll Down</span>
-          <ChevronDown className="w-6 h-6" />
-        </a>
-      </div>
+
+      <a
+        href="#highlights"
+        className="shell relative hidden items-center gap-3 pb-8 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary md:flex"
+      >
+        <ArrowDown className="h-3.5 w-3.5" />
+        Scroll
+      </a>
     </section>
   );
 };

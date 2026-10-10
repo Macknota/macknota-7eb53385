@@ -10,7 +10,12 @@ export type SkillKey =
   | "tools"
   | "testing";
 
+// Bump when the content model changes: saved dashboard data from an older
+// version is ignored so the site never renders stale copy.
+export const CONTENT_VERSION = 3;
+
 export interface PortfolioData {
+  version?: number;
   hero: {
     name: string;
     title: string;
@@ -74,6 +79,7 @@ export interface PortfolioData {
     status?: string;
     liveLinks?: { label: string; url: string }[];
     visual?: string;
+    screens?: { label: string; url: string; desktop: string; mobile: string }[];
   }[];
   languages: {
     name: string;
@@ -83,6 +89,11 @@ export interface PortfolioData {
     label: string;
     value: string;
     icon: string;
+    detail?: string;
+  }[];
+  services?: {
+    title: string;
+    description: string;
   }[];
   learning: {
     title: string;
@@ -105,22 +116,23 @@ export const skillCategoryList: { key: SkillKey; title: string }[] = [
 const PRIVATE_NOTE = "Built at Asus Card · code is private";
 
 export const defaultPortfolioData: PortfolioData = {
+  version: CONTENT_VERSION,
   hero: {
     name: "Adel Magdy Macknota",
     title: "Full Stack Software Engineer",
     tagline: "Building software where getting it wrong costs money.",
     focus: "Fintech, Payments & Compliance Systems",
     subtitle: ".NET · NestJS · React · Next.js",
-    profileImage: "/images/profile.jpeg",
+    profileImage: "/images/profile.webp",
     cvFile: "/files/Adel_Magdy_Macknota_CV.pdf",
     statusBadge: "Available for remote freelance & part-time work",
     showStatusBadge: true,
     showCvButton: true,
-    logoText: "Adel",
-    footerText: "Built with",
+    logoText: "Adel Macknota",
+    footerText: "",
   },
   about: {
-    title: "About Me",
+    title: "About",
     description:
       "Full Stack Software Engineer working across the .NET and Node.js ecosystems, focused on fintech, payments and compliance systems: software that has to be correct, auditable and safe to retry. I build ASP.NET Core and NestJS backends on SQL Server and PostgreSQL, and React, Next.js and Angular frontends. Current work spans an e-invoicing integration hub for ZATCA Phase 2, an automated payment reconciliation platform, an AI-driven SEO automation engine, and live, Arabic-first e-commerce storefronts where I delivered measurable performance and SEO gains.\n\nI care about architecture as much as working code: Clean Architecture, SOLID, idempotency, auditability, secure secret handling and automated testing, so systems stay correct under real-world load and maintainable as they grow. I use AI development tools to move faster on research and refactoring, with every design decision and merged change under my own review.",
   },
@@ -166,9 +178,7 @@ export const defaultPortfolioData: PortfolioData = {
       type: "Full-time",
       highlights: [
         "Building backend platforms end to end across two stacks (.NET/React and NestJS/Next.js), owning architecture, database design, background processing, integrations and automated testing.",
-        "ZATCA E-Invoicing Integration Hub — validated against ZATCA Sandbox & Simulation.",
-        "Multi-Brand E-Commerce Storefronts (Purple Card & Ish7an) — live; cut store home pages from 1.9 MB to 220 KB of JavaScript and eliminated mobile layout shift (CLS from up to 0.81 to ~0).",
-        "Payment Reconciliation Platform and AI-Powered SEO Automation Platform — in active development.",
+        "The three backend platforms below are in active development and not yet publicly live.",
       ],
     },
     {
@@ -229,7 +239,21 @@ export const defaultPortfolioData: PortfolioData = {
         { label: "purple-card.com", url: "https://www.purple-card.com" },
         { label: "ish7an.com", url: "https://www.ish7an.com" },
       ],
-      technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "TanStack Query", "i18next", "Playwright", "Nginx"],
+      screens: [
+        {
+          label: "Purple Card",
+          url: "https://www.purple-card.com",
+          desktop: "/images/work/purple-card-desktop.webp",
+          mobile: "/images/work/purple-card-mobile.webp",
+        },
+        {
+          label: "Ish7an",
+          url: "https://www.ish7an.com",
+          desktop: "/images/work/ish7an-desktop.webp",
+          mobile: "/images/work/ish7an-mobile.webp",
+        },
+      ],
+      technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "TanStack Query", "React Hook Form + Zod", "i18next", "Playwright", "Nginx"],
       description: "A multi-tenant platform where one React codebase serves many branded, Arabic-first stores for digital gift cards and game top-ups.",
       features: [
         "Rebuilt the Purple Card storefront and built its loyalty system from scratch: points, tiers, Shop with Points and a merchant control center.",
@@ -260,6 +284,7 @@ export const defaultPortfolioData: PortfolioData = {
     {
       name: "Store — E-Commerce REST API",
       group: "personal",
+      visual: "storeapi",
       technologies: [".NET 8", "ASP.NET Core Web API", "EF Core", "SQL Server", "Redis", "AutoMapper", "Docker", "Stripe"],
       description: "A clean, layered e-commerce backend with payments, caching and role-based security.",
       features: [
@@ -274,6 +299,7 @@ export const defaultPortfolioData: PortfolioData = {
     {
       name: "Social Connections Platform",
       group: "personal",
+      visual: "social",
       technologies: [".NET 8", "Angular 18", "SignalR", "SQL Server", "EF Core", "ASP.NET Core Identity"],
       description: "A full-stack social app with real-time messaging and live presence.",
       features: [
@@ -291,36 +317,26 @@ export const defaultPortfolioData: PortfolioData = {
     { name: "Spanish", level: "Beginner" },
   ],
   stats: [
-    { label: "Store home pages JavaScript", value: "1.9 MB → 220 KB", icon: "zap" },
-    { label: "Mobile layout shift (CLS)", value: "0.81 → ~0", icon: "target" },
-    { label: "ZATCA integration", value: "Sandbox & Simulation validated", icon: "award" },
+    { label: "Store home pages", value: "1.9 MB → 220 KB", detail: "of JavaScript, by isolating brand and template code", icon: "zap" },
+    { label: "Mobile layout shift (CLS)", value: "0.81 → ~0", detail: "eliminated across the storefronts", icon: "target" },
+    { label: "ZATCA integration", value: "Sandbox & Simulation", detail: "validated against both ZATCA environments", icon: "award" },
+  ],
+  services: [
+    {
+      title: "Backend APIs",
+      description: "ASP.NET Core and NestJS services on SQL Server and PostgreSQL, built to be correct, auditable and safe to retry.",
+    },
+    {
+      title: "Payment & third-party integrations",
+      description: "Payment, e-invoicing and external API integrations with idempotency, retries, webhooks and audit logging.",
+    },
+    {
+      title: "Full-stack web apps",
+      description: "React, Next.js and Angular frontends on top of a clean backend: responsive, fast and Arabic/RTL-ready.",
+    },
   ],
   learning: {
     title: "",
     description: "",
   },
-};
-
-// Local Storage Key
-const STORAGE_KEY = "portfolio_data";
-
-export const getPortfolioData = (): PortfolioData => {
-  if (typeof window === "undefined") return defaultPortfolioData;
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch {
-      return defaultPortfolioData;
-    }
-  }
-  return defaultPortfolioData;
-};
-
-export const savePortfolioData = (data: PortfolioData): void => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-};
-
-export const resetPortfolioData = (): void => {
-  localStorage.removeItem(STORAGE_KEY);
 };

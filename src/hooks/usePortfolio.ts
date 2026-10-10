@@ -1,14 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { 
-  PortfolioData, 
-  defaultPortfolioData 
+import {
+  CONTENT_VERSION,
+  PortfolioData,
+  defaultPortfolioData,
 } from "@/lib/portfolioData";
-import { uploadImage, isBase64Image } from "@/lib/imageUpload";
+
+// Loaded on demand so the Supabase client stays out of the public page's
+// initial bundle.
+const loadSupabase = () => import("@/integrations/supabase/client").then((m) => m.supabase);
+const isBase64Image = (value?: string) => value?.startsWith("data:image/") ?? false;
 
 // Process images in portfolio data - upload base64 to storage
 const processImages = async (data: PortfolioData): Promise<PortfolioData> => {
   const processed = { ...data };
+  const { uploadImage } = await import("@/lib/imageUpload");
 
   // Upload profile image if base64
   if (isBase64Image(processed.hero.profileImage)) {
@@ -57,6 +62,7 @@ export const usePortfolio = () => {
   // Fetch data from database
   useEffect(() => {
     const fetchData = async () => {
+      const supabase = await loadSupabase();
       const { data: rows, error } = await supabase
         .from("portfolio_data")
         .select("*")
@@ -69,18 +75,23 @@ export const usePortfolio = () => {
         return;
       }
 
-      if (rows?.data) {
-        // Merge with defaults to ensure all fields exist
-        const merged = { ...defaultPortfolioData, ...(rows.data as unknown as PortfolioData) };
-        setData(merged);
+      const saved = rows?.data as unknown as PortfolioData | undefined;
+      // Saved data from an older content model would override the current copy
+      // with stale text, so only a matching version is applied.
+      if (saved && saved.version === CONTENT_VERSION) {
+        setData({ ...defaultPortfolioData, ...saved });
       }
       setIsLoaded(true);
     };
 
-    fetchData();
+    fetchData().catch((error) => {
+      console.error("Error fetching portfolio data:", error);
+      setIsLoaded(true);
+    });
   }, []);
 
-  const updateData = useCallback(async (newData: PortfolioData) => {
+  const updateData = useCallback(async (input: PortfolioData) => {
+    const newData = { ...input, version: CONTENT_VERSION };
     setData(newData);
     setIsSaving(true);
 
@@ -93,6 +104,7 @@ export const usePortfolio = () => {
         setData(processed);
       }
 
+      const supabase = await loadSupabase();
       // Get current user
       const { data: session } = await supabase.auth.getSession();
       const userId = session?.session?.user?.id;
@@ -137,7 +149,8 @@ export const usePortfolio = () => {
 
   const resetData = async () => {
     setData(defaultPortfolioData);
-    
+
+    const supabase = await loadSupabase();
     const { data: session } = await supabase.auth.getSession();
     const userId = session?.session?.user?.id;
     if (userId) {

@@ -1,78 +1,80 @@
+import { ArrowDownRight, MapPin } from "lucide-react";
 import { PortfolioData } from "@/lib/portfolioData";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Briefcase, MapPin, Calendar, Check } from "lucide-react";
+import { toSlug } from "@/lib/contact";
+import Reveal from "./Reveal";
+import SectionHeading from "./SectionHeading";
 
 interface ExperienceSectionProps {
   data: PortfolioData;
 }
 
 const ExperienceSection = ({ data }: ExperienceSectionProps) => {
+  const platforms = data.projects.filter((project) => project.group === "professional");
+
   return (
-    <section id="experience" className="py-12 md:py-20">
-      <div className="container px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Section Title */}
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
-              Work Experience
-            </h2>
-            <div className="w-16 md:w-20 h-1 bg-primary/60 mx-auto rounded-full" />
-          </div>
-          
-          {/* Timeline */}
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border hidden md:block" />
-            
-            {data.experience.map((exp, index) => (
-              <div key={index} className="relative mb-6 md:mb-8 last:mb-0">
-                {/* Timeline dot */}
-                <div className="absolute left-6 top-6 w-4 h-4 rounded-full bg-primary border-4 border-background hidden md:block transition-transform duration-300 hover:scale-150" />
-                
-                <Card className="md:ml-16 border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 interactive-card">
-                  <CardContent className="p-4 md:p-6">
-                    {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-4 mb-3 md:mb-4">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <Briefcase className="w-4 h-4 md:w-5 md:h-5 text-primary pop-icon" />
-                          <h3 className="text-base md:text-xl font-semibold text-foreground">{exp.role}</h3>
-                        </div>
-                        <p className="text-sm md:text-lg text-primary font-medium">{exp.company}</p>
-                      </div>
-                      <Badge variant="secondary" className="w-fit pop-badge text-xs md:text-sm">
-                        {exp.type}
-                      </Badge>
-                    </div>
-                    
-                    {/* Meta info */}
-                    <div className="flex flex-wrap gap-3 md:gap-4 text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
-                      <div className="flex items-center gap-1 pop-element">
-                        <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                        {exp.location}
-                      </div>
-                      <div className="flex items-center gap-1 pop-element">
-                        <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                        {exp.dates}
-                      </div>
-                    </div>
-                    
-                    {/* Highlights */}
-                    <ul className="space-y-1.5 md:space-y-2">
-                      {exp.highlights.map((highlight, hIndex) => (
-                        <li key={hIndex} className="flex items-start gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground group/highlight">
-                          <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-0.5 flex-shrink-0 transition-transform duration-200 group-hover/highlight:scale-125" />
-                          <span className="group-hover/highlight:text-foreground transition-colors duration-200">{highlight}</span>
+    <section id="experience" className="border-b border-border py-20 md:py-28">
+      <div className="shell">
+        <SectionHeading index="02" label="Experience" title="Where I've been building." />
+
+        <ol>
+          {data.experience.map((role, index) => (
+            <li key={`${role.company}-${role.dates}`}>
+              <Reveal className="grid gap-4 border-t border-border py-10 md:grid-cols-12 md:gap-10 md:py-12">
+                <div className="md:col-span-4">
+                  <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">{role.dates}</p>
+                  <p className="mt-3 inline-flex items-center gap-2 text-sm text-muted-foreground">
+                    <MapPin className="h-3.5 w-3.5" />
+                    {role.location}
+                  </p>
+                  <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground/40">
+                    {role.type}
+                  </p>
+                </div>
+
+                <div className="md:col-span-8">
+                  <h3 className="font-serif text-[1.8rem] leading-[1.1] text-foreground md:text-[2.1rem]">
+                    {role.role}
+                  </h3>
+                  <p className="mt-2 text-[15px] font-medium text-foreground/80">{role.company}</p>
+
+                  <ul className="mt-6 space-y-3">
+                    {role.highlights.map((highlight) => (
+                      <li key={highlight} className="flex gap-3 text-[15px] leading-relaxed text-muted-foreground">
+                        <span className="mt-[0.7em] h-px w-4 shrink-0 bg-primary/70" aria-hidden="true" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {index === 0 && platforms.length > 0 && (
+                    <ul className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
+                      {platforms.map((project) => (
+                        <li key={project.name} className="bg-background">
+                          <a
+                            href={`#${toSlug(project.name)}`}
+                            className="group flex h-full items-start justify-between gap-4 p-4 transition-colors hover:bg-card"
+                          >
+                            <span>
+                              <span className="block text-sm font-semibold leading-snug text-foreground">
+                                {project.name}
+                              </span>
+                              {project.status && (
+                                <span className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/50">
+                                  {project.status}
+                                </span>
+                              )}
+                            </span>
+                            <ArrowDownRight className="mt-0.5 h-4 w-4 shrink-0 text-foreground/30 transition-colors group-hover:text-primary" />
+                          </a>
                         </li>
                       ))}
                     </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
+                  )}
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
