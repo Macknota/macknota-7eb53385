@@ -1,4 +1,4 @@
-import { PortfolioData } from "@/lib/portfolioData";
+import { PortfolioData, skillCategoryList } from "@/lib/portfolioData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,20 +12,13 @@ interface SkillsEditorProps {
   onUpdate: (data: PortfolioData) => void;
 }
 
-const skillCategories: { key: keyof PortfolioData["skills"]; label: string }[] = [
-  { key: "languages", label: "Programming Languages" },
-  { key: "frameworks", label: "Frameworks & Technologies" },
-  { key: "databases", label: "Databases" },
-  { key: "architecture", label: "Architecture & Patterns" },
-  { key: "tools", label: "Tools" },
-  { key: "concepts", label: "Concepts" },
-];
+const skillCategories = skillCategoryList.map((c) => ({ key: c.key, label: c.title }));
 
 const SkillsEditor = ({ data, onUpdate }: SkillsEditorProps) => {
   const [newSkills, setNewSkills] = useState<Record<string, string>>({});
 
   const removeSkill = (category: keyof PortfolioData["skills"], index: number) => {
-    const newSkillsList = [...data.skills[category]];
+    const newSkillsList = [...(data.skills[category] || [])];
     newSkillsList.splice(index, 1);
     onUpdate({
       ...data,
@@ -38,7 +31,7 @@ const SkillsEditor = ({ data, onUpdate }: SkillsEditorProps) => {
     if (skill) {
       onUpdate({
         ...data,
-        skills: { ...data.skills, [category]: [...data.skills[category], skill] },
+        skills: { ...data.skills, [category]: [...(data.skills[category] || []), skill] },
       });
       setNewSkills({ ...newSkills, [category]: "" });
     }
@@ -67,7 +60,7 @@ const SkillsEditor = ({ data, onUpdate }: SkillsEditorProps) => {
           <CardContent className="space-y-4">
             {/* Current Skills */}
             <div className="flex flex-wrap gap-2">
-              {data.skills[category.key].map((skill, index) => (
+              {(data.skills[category.key] || []).map((skill, index) => (
                 <Badge
                   key={index}
                   variant="secondary"

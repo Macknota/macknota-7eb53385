@@ -15,26 +15,26 @@ export interface ThemeSettings {
   isDarkMode: boolean;
 }
 
-const THEME_STORAGE_KEY = "portfolio_theme_settings";
+const THEME_STORAGE_KEY = "portfolio_theme_settings_v2";
 
-// Orange Sunset Theme
+// Light variant of the navy/teal theme
 const defaultLightTheme: ThemeColors = {
-  primary: "25 95% 55%",          // Orange
-  accent: "35 100% 60%",          // Golden Orange
-  background: "0 0% 100%",        // White
-  foreground: "30 10% 10%",       // Dark text
-  cardBackground: "30 30% 97%",   // Warm light card
-  mutedForeground: "30 10% 45%",  // Muted warm grey
+  primary: "174 72% 32%",
+  accent: "171 60% 40%",
+  background: "223 50% 97%",
+  foreground: "226 50% 10%",
+  cardBackground: "0 0% 100%",
+  mutedForeground: "224 15% 40%",
 };
 
-// Orange Night Theme
+// Navy / teal theme (default)
 const defaultDarkTheme: ThemeColors = {
-  primary: "25 95% 60%",          // Orange
-  accent: "35 100% 65%",          // Golden Orange
-  background: "20 20% 6%",        // Dark warm background
-  foreground: "30 20% 98%",       // Light text
-  cardBackground: "20 20% 10%",   // Dark warm card
-  mutedForeground: "30 10% 60%",  // Muted warm grey
+  primary: "171 77% 64%",
+  accent: "171 60% 50%",
+  background: "226 50% 8%",
+  foreground: "223 50% 97%",
+  cardBackground: "226 40% 11%",
+  mutedForeground: "222 15% 65%",
 };
 
 const defaultSettings: ThemeSettings = {
@@ -73,25 +73,25 @@ export const applyTheme = (theme: ThemeColors, isDarkMode: boolean): void => {
   
   // Update related colors based on primary
   const primaryHue = theme.primary.split(" ")[0];
-  root.style.setProperty("--primary-foreground", "0 0% 100%");
-  root.style.setProperty("--accent-foreground", "0 0% 100%");
-  root.style.setProperty("--ring", `${primaryHue} 50% 60%`);
+  root.style.setProperty("--primary-foreground", isDarkMode ? theme.background : "0 0% 100%");
+  root.style.setProperty("--accent-foreground", isDarkMode ? theme.background : "0 0% 100%");
+  root.style.setProperty("--ring", `${primaryHue} 60% 55%`);
   
   // Update secondary and muted based on dark mode
   if (isDarkMode) {
-    root.style.setProperty("--secondary", "0 0% 18%");
-    root.style.setProperty("--secondary-foreground", "0 0% 98%");
-    root.style.setProperty("--muted", "0 0% 18%");
-    root.style.setProperty("--border", "0 0% 22%");
-    root.style.setProperty("--input", "0 0% 22%");
+    root.style.setProperty("--secondary", "225 30% 16%");
+    root.style.setProperty("--secondary-foreground", "223 50% 97%");
+    root.style.setProperty("--muted", "225 30% 14%");
+    root.style.setProperty("--border", "224 25% 20%");
+    root.style.setProperty("--input", "224 25% 20%");
     root.style.setProperty("--popover", theme.cardBackground);
     root.style.setProperty("--popover-foreground", theme.foreground);
   } else {
-    root.style.setProperty("--secondary", "0 0% 92%");
-    root.style.setProperty("--secondary-foreground", "0 0% 12%");
-    root.style.setProperty("--muted", "0 0% 96%");
-    root.style.setProperty("--border", "0 0% 88%");
-    root.style.setProperty("--input", "0 0% 88%");
+    root.style.setProperty("--secondary", "223 30% 92%");
+    root.style.setProperty("--secondary-foreground", "226 50% 10%");
+    root.style.setProperty("--muted", "223 30% 94%");
+    root.style.setProperty("--border", "223 20% 86%");
+    root.style.setProperty("--input", "223 20% 86%");
     root.style.setProperty("--popover", theme.cardBackground);
     root.style.setProperty("--popover-foreground", theme.foreground);
   }
