@@ -35,7 +35,7 @@ const HighlightsSection = ({ data }: HighlightsSectionProps) => {
             >
               <dt className="label-mono mb-2.5 md:mb-4">{stat.label}</dt>
               <dd>
-                <span className="block whitespace-nowrap font-serif text-[1.75rem] leading-none text-foreground sm:text-[2.6rem] md:text-[2.2rem] lg:text-[2.9rem]">
+                <span className="block whitespace-nowrap font-display text-[1.5rem] leading-none text-foreground sm:text-[2.1rem] md:text-[1.6rem] lg:text-[2.15rem]">
                   <StatValue value={stat.value} />
                 </span>
                 {stat.detail && (

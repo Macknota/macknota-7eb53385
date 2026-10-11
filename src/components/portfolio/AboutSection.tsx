@@ -42,7 +42,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
           <Reveal delay={100} className="lg:col-span-5">
             <div className="rounded-2xl border border-border bg-card/40 p-5 md:p-8">
               <Fact label="Education">
-                <p className="font-serif text-lg leading-snug text-foreground md:text-xl">{education.degree}</p>
+                <p className="font-display text-base leading-snug text-foreground md:text-lg">{education.degree}</p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {education.university} · {education.graduationYear}
                 </p>
@@ -56,7 +56,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
                 <Fact label="Training">
                   {data.courses.map((course) => (
                     <div key={course.name}>
-                      <p className="font-serif text-lg leading-snug text-foreground md:text-xl">
+                      <p className="font-display text-base leading-snug text-foreground md:text-lg">
                         {course.name} <span className="text-foreground/50">· {course.year}</span>
                       </p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{course.description}</p>

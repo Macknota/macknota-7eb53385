@@ -108,8 +108,15 @@ export default {
   				'Noto Sans',
   				'sans-serif'
   			],
+  			display: [
+  				'Sora',
+  				'Manrope',
+  				'ui-sans-serif',
+  				'system-ui',
+  				'sans-serif'
+  			],
   			serif: [
-  				'Instrument Serif',
+  				'Georgia',
   				'ui-serif',
   				'Georgia',
   				'Cambria',

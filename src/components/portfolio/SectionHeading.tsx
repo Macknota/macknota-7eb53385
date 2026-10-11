@@ -16,7 +16,7 @@ const SectionHeading = ({ index, label, title, intro }: SectionHeadingProps) => 
       </span>
       <span className="h-px flex-1 bg-border" />
     </div>
-    <h2 className="max-w-3xl text-[1.8rem] leading-[1.1] text-foreground sm:text-5xl md:text-[3.4rem]">
+    <h2 className="max-w-3xl text-[1.55rem] leading-[1.15] text-foreground sm:text-4xl md:text-[2.7rem]">
       {title}
     </h2>
     {intro && (

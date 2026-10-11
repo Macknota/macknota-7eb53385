@@ -20,7 +20,7 @@ const Footer = ({ data }: FooterProps) => {
     <footer className="border-t border-border">
       <div className="shell flex flex-col gap-6 py-8 md:flex-row md:gap-8 md:py-10 md:items-center md:justify-between">
         <div>
-          <p className="font-serif text-xl text-foreground md:text-2xl">{hero.name}</p>
+          <p className="font-display text-lg text-foreground md:text-xl">{hero.name}</p>
           <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground/50">
             {hero.title} · {contact.location}
           </p>

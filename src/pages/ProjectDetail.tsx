@@ -68,7 +68,7 @@ const ProjectDetail = () => {
               <StatusChip project={project} />
             </div>
 
-            <h1 className="max-w-4xl text-[2.2rem] leading-[1.04] text-foreground sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-[1.8rem] leading-[1.1] text-foreground sm:text-5xl lg:text-[3.5rem]">
               {project.name}
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-xl md:leading-relaxed">
@@ -121,7 +121,7 @@ const ProjectDetail = () => {
             <div className="lg:col-span-8">
               <Reveal>
                 <p className="label-mono mb-4">What I built</p>
-                <h2 className="mb-8 text-[1.8rem] leading-[1.1] text-foreground md:mb-10 md:text-5xl">
+                <h2 className="mb-8 text-[1.5rem] leading-[1.15] text-foreground md:mb-10 md:text-4xl">
                   The work, point by point.
                 </h2>
               </Reveal>
@@ -176,7 +176,7 @@ const ProjectDetail = () => {
             >
               <span className="label-mono">Next project</span>
               <span className="mt-8 flex items-end justify-between gap-4">
-                <span className="font-serif text-[1.6rem] leading-[1.1] text-foreground md:text-4xl">{next.name}</span>
+                <span className="font-display text-[1.3rem] leading-[1.2] text-foreground md:text-[1.9rem]">{next.name}</span>
                 <ArrowRight className="mb-1 h-5 w-5 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </Link>
@@ -186,7 +186,7 @@ const ProjectDetail = () => {
                 {data.hero.statusBadge}
               </span>
               <span className="mt-8 flex flex-wrap items-end justify-between gap-4">
-                <span className="font-serif text-[1.6rem] leading-[1.1] text-foreground md:text-4xl">
+                <span className="font-display text-[1.3rem] leading-[1.2] text-foreground md:text-[1.9rem]">
                   Need something like this?
                 </span>
                 <Link to={{ pathname: "/", hash: "#contact" }} className="btn btn-primary">

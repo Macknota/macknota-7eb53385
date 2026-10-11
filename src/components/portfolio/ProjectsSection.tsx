@@ -27,7 +27,7 @@ const ProjectCard = ({ project, index, number }: { project: Project; index: numb
           <span className="font-mono text-[11px] text-foreground/40">{String(number).padStart(2, "0")}</span>
           <StatusChip project={project} />
         </div>
-        <h3 className="font-serif text-[1.45rem] leading-[1.12] text-foreground sm:text-[1.75rem]">{project.name}</h3>
+        <h3 className="font-display text-[1.2rem] leading-[1.2] text-foreground sm:text-[1.4rem]">{project.name}</h3>
         <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">{project.description}</p>
 
         <div className="mt-auto flex items-end justify-between gap-4 pt-5">
@@ -46,7 +46,7 @@ const ProjectCard = ({ project, index, number }: { project: Project; index: numb
 
 const GroupLabel = ({ title, note }: { title: string; note?: string }) => (
   <Reveal className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-border pb-6 pt-8 md:pt-10">
-    <h3 className="font-serif text-[1.4rem] text-foreground md:text-3xl">{title}</h3>
+    <h3 className="font-display text-[1.2rem] text-foreground md:text-2xl">{title}</h3>
     {note && (
       <p className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/50 sm:text-[11px]">
         <Lock className="h-3 w-3" />

@@ -49,12 +49,12 @@ const HeroSection = ({ data }: HeroSectionProps) => {
             )}
           </p>
 
-          <h1 className="text-[2.45rem] leading-[1] text-foreground sm:text-7xl lg:text-[5.4rem]">
+          <h1 className="text-[2.1rem] leading-[1.05] text-foreground sm:text-[3rem] lg:text-[3.4rem]">
             {hero.name}
           </h1>
 
           {hero.tagline && (
-            <p className="mt-4 max-w-xl font-serif text-[1.3rem] italic leading-[1.2] text-foreground/80 sm:mt-6 sm:text-4xl">
+            <p className="mt-4 max-w-xl text-[1.05rem] font-medium leading-[1.35] text-foreground/70 sm:mt-6 sm:text-2xl">
               {hero.tagline}
             </p>
           )}
@@ -137,7 +137,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
                 aria-hidden="true"
               />
               <figcaption className="absolute inset-x-0 bottom-0 p-5">
-                <span className="block font-serif text-xl leading-tight text-foreground">{hero.name}</span>
+                <span className="block font-display text-lg leading-tight text-foreground">{hero.name}</span>
                 <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/60">
                   {hero.title}
                 </span>

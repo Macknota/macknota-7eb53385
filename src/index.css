@@ -75,7 +75,13 @@
 
   h1,
   h2 {
-    @apply font-serif font-normal tracking-tight;
+    @apply font-display;
+  }
+
+  /* Emphasis inside headings is carried by colour, not slant. */
+  h1 em,
+  h2 em {
+    font-style: normal;
   }
 
   ::selection {
@@ -99,6 +105,11 @@
 @layer components {
   .shell {
     @apply mx-auto w-full max-w-[1160px] px-5 sm:px-8;
+  }
+
+  .font-display {
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
 
   .dot-grid {

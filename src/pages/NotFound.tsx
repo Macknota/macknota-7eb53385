@@ -4,7 +4,7 @@ const NotFound = () => (
   <div className="dot-grid flex min-h-screen items-center justify-center bg-background px-5">
     <div className="text-center">
       <p className="label-mono mb-4">Error 404</p>
-      <h1 className="text-6xl text-foreground md:text-7xl">Page not found</h1>
+      <h1 className="text-4xl text-foreground md:text-6xl">Page not found</h1>
       <p className="mx-auto mt-4 max-w-sm text-muted-foreground">
         The page you're looking for doesn't exist or has moved.
       </p>

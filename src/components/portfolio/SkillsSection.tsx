@@ -30,7 +30,7 @@ const SkillsSection = ({ data }: SkillsSectionProps) => {
             >
               <dt className="flex items-baseline gap-4 md:col-span-4">
                 <span className="font-mono text-[11px] text-foreground/35">{String(index + 1).padStart(2, "0")}</span>
-                <span className="font-serif text-xl leading-tight text-foreground md:text-2xl">{group.title}</span>
+                <span className="font-display text-[1.05rem] leading-tight text-foreground md:text-xl">{group.title}</span>
               </dt>
               <dd className="md:col-span-8">
                 <ul className="flex flex-wrap gap-1.5 md:gap-2">

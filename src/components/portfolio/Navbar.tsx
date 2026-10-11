@@ -44,7 +44,7 @@ const Navbar = ({ data }: NavbarProps) => {
     >
       <div className="shell flex h-14 items-center md:h-16 justify-between gap-6">
         <Link to={{ pathname: "/", hash: "#top" }} className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/40 font-serif text-base md:h-9 md:w-9 md:text-lg leading-none text-primary">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/40 font-display text-sm md:h-9 md:w-9 md:text-base leading-none text-primary">
             A
           </span>
           <span className="text-sm font-semibold tracking-tight text-foreground">
@@ -89,7 +89,7 @@ const Navbar = ({ data }: NavbarProps) => {
                 <Link
                   to={{ pathname: "/", hash: link.hash }}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-baseline gap-4 py-3.5 font-serif text-2xl text-foreground"
+                  className="flex items-baseline gap-4 py-3.5 font-display text-xl text-foreground"
                 >
                   <span className="font-mono text-[11px] text-primary">0{index + 1}</span>
                   {link.label}

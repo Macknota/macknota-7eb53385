@@ -31,7 +31,7 @@ const WorkWithMeSection = ({ data }: WorkWithMeSectionProps) => {
             Open to remote freelance &amp; part-time work
           </p>
 
-          <h2 className="max-w-4xl text-[2rem] leading-[1.06] text-foreground sm:text-6xl md:text-7xl">
+          <h2 className="max-w-4xl text-[1.7rem] leading-[1.12] text-foreground sm:text-5xl md:text-[3.5rem]">
             Have something that <em className="text-primary">can't afford</em> to be wrong?
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground md:mt-6 md:text-lg">
@@ -46,7 +46,7 @@ const WorkWithMeSection = ({ data }: WorkWithMeSectionProps) => {
               <li key={service.title} className="bg-background">
                 <Reveal delay={index * 90} className="h-full p-5 md:p-8">
                   <span className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-2.5 font-serif text-xl leading-tight text-foreground md:mt-4 md:text-2xl">{service.title}</h3>
+                  <h3 className="mt-2.5 font-display text-[1.05rem] leading-tight text-foreground md:mt-4 md:text-xl">{service.title}</h3>
                   <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground md:mt-3 md:text-sm">{service.description}</p>
                 </Reveal>
               </li>

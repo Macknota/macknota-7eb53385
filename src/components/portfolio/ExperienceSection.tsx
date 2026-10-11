@@ -33,7 +33,7 @@ const ExperienceSection = ({ data }: ExperienceSectionProps) => {
                 </div>
 
                 <div className="md:col-span-8">
-                  <h3 className="font-serif text-[1.5rem] leading-[1.1] text-foreground md:text-[2.1rem]">
+                  <h3 className="font-display text-[1.25rem] leading-[1.2] text-foreground md:text-[1.7rem]">
                     {role.role}
                   </h3>
                   <p className="mt-2 text-sm font-medium text-foreground/80 md:text-[15px]">{role.company}</p>
